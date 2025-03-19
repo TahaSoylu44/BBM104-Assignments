@@ -1,24 +1,28 @@
-public class Books extends Library {
+public class Books extends Items {
     //VARIABLES
-    private String classType;
-    private String ID;
-    private String title;
     private String author;
     private String category;
-    private String type;
 
     //CONSTRUCTOR
-    Books(String classType, String ID, String title, String author, String category, String type) {
-        this.classType = classType;
-        this.ID = ID;
-        this.title = title;
-        this.author = author;
+    Books(String ID, String title, String author, String category, String type) {
+        super(ID,title,type);  //Inherited from "Items" class
         this.category = category;
-        this.type = type;
+        this.author = author;
     }
 
-    @Override
-    public String toString(){
-        return classType + " " + ID + " " + title + " " + author + " " + category + " " + type;
+    //GETTERS
+    public String getAuthor(){
+        return author;
+    }
+    public String getCategory(){
+        return category;
+    }
+
+    //SETTERS
+    public void setAuthor(String author){
+        this.author = author;
+    }
+    public void setCategory(String category){
+        this.category = category;
     }
 }
