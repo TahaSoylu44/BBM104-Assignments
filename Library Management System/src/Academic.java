@@ -5,8 +5,8 @@ public class Academic extends Person {
     private String title;
 
     //CONSTRUCTOR
-    Academic(String ID, String name, String phone, String faculty, String department, String title) {
-        super(ID, name, phone,3,15);
+    Academic(String name, String ID, String phone, String faculty, String department, String title) {
+        super(ID, name, phone,3,15,0);
         this.faculty = faculty;
         this.department = department;
         this.title = title;

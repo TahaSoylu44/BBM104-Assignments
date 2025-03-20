@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Student extends Person {
     //VARIABLES
     private String faculty;
@@ -5,8 +7,8 @@ public class Student extends Person {
     private String grade;
 
     //CONSTRUCTOR
-    Student(String ID, String name, String phone, String faculty, String department, String grade) {
-        super(ID, name, phone,5,30);
+    Student(String name, String ID, String phone, String faculty, String department, String grade) {
+        super(ID, name, phone,5,30,0);
         this.faculty = faculty;
         this.department = department;
         this.grade = grade;

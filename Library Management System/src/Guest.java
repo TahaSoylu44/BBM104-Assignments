@@ -3,8 +3,8 @@ public class Guest extends Person {
     private String occupation;
 
     //CONSTRUCTOR
-    Guest(String ID, String name, String phone, String occupation) {
-        super(ID, name, phone,1,7);
+    Guest(String name, String ID, String phone, String occupation) {
+        super(ID, name, phone,1,7,0);
         this.occupation = occupation;
     }
 
