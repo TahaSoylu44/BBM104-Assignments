@@ -8,7 +8,7 @@ public class Student extends Person {
 
     //CONSTRUCTOR
     Student(String name, String ID, String phone, String faculty, String department, String grade) {
-        super(ID, name, phone,5,30,0);
+        super(ID, name, phone,5,30,0,0);
         this.faculty = faculty;
         this.department = department;
         this.grade = grade;

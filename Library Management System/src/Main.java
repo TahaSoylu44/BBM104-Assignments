@@ -5,29 +5,29 @@ import java.time.LocalDate;
 
 public class Main {
     public static Main mainObj = new Main(); //I needed a main object to reach the hashmaps.
-
-    private HashMap<String, Object> mapBook = new HashMap();
-    private HashMap<String, Object> mapMagazine = new HashMap();
-    private HashMap<String, Object> mapDVD = new HashMap();
-    private HashMap<String, Object> mapStudent = new HashMap();
-    private HashMap<String, Object> mapAcademic = new HashMap();
-    private HashMap<String, Object> mapGuest = new HashMap();
+    public static Person person;
+    private HashMap<String, Object> mapBook = new HashMap<>();
+    private HashMap<String, Object> mapMagazine = new HashMap<>();
+    private HashMap<String, Object> mapDVD = new HashMap<>();
+    private HashMap<String, Object> mapStudent = new HashMap<>();
+    private HashMap<String, Object> mapAcademic = new HashMap<>();
+    private HashMap<String, Object> mapGuest = new HashMap<>();
 
     //Getter for hashmaps
-    public HashMap getMapBook() {return mapBook;}
-    public HashMap getMapMagazine() {return mapMagazine;}
-    public HashMap getMapDVD() {return mapDVD;}
-    public HashMap getMapStudent() {return mapStudent;}
-    public HashMap getMapAcademic() {return mapAcademic;}
-    public HashMap getMapGuest() {return mapGuest;}
+    public HashMap<String, Object> getMapBook() {return mapBook;}
+    public HashMap<String, Object> getMapMagazine() {return mapMagazine;}
+    public HashMap<String, Object> getMapDVD() {return mapDVD;}
+    public HashMap<String, Object> getMapStudent() {return mapStudent;}
+    public HashMap<String, Object> getMapAcademic() {return mapAcademic;}
+    public HashMap<String, Object> getMapGuest() {return mapGuest;}
 
     //Setter for hashmaps
-    public void setMapBook(HashMap mapBook) {this.mapBook = mapBook;}
-    public void setMapMagazine(HashMap mapMagazine) {this.mapMagazine = mapMagazine;}
-    public void setMapDVD(HashMap mapDVD) {this.mapDVD = mapDVD;}
-    public void setMapStudent(HashMap mapStudent) {this.mapStudent = mapStudent;}
-    public void setMapAcademic(HashMap mapAcademic) {this.mapAcademic = mapAcademic;}
-    public void setMapGuest(HashMap mapGuest) {this.mapGuest = mapGuest;}
+    public void setMapBook(HashMap<String, Object> mapBook) {this.mapBook = mapBook;}
+    public void setMapMagazine(HashMap<String, Object> mapMagazine) {this.mapMagazine = mapMagazine;}
+    public void setMapDVD(HashMap<String, Object> mapDVD) {this.mapDVD = mapDVD;}
+    public void setMapStudent(HashMap<String, Object> mapStudent) {this.mapStudent = mapStudent;}
+    public void setMapAcademic(HashMap<String, Object> mapAcademic) {this.mapAcademic = mapAcademic;}
+    public void setMapGuest(HashMap<String, Object> mapGuest) {this.mapGuest = mapGuest;}
 
     // Function to read a text file
     public static ArrayList<String[]> readTxtAsObject(String input) {
@@ -186,24 +186,92 @@ public class Main {
         }
         System.out.println("*************************************");
          */
+
+
+        borrow("3001","1001","09/02/2025");
+        borrow("3001","1002","09/02/2025");
+        borrow("3001","1003","09/02/2025");
+        borrow("3001","1004","09/02/2025");
+        borrow("3002","1003","12/03/2025");
+        borrow("3001","1004","10/03/2025");
+        borrow("3001","3005","13/03/2025");
+
+
+
     }
 
 
-    public void borrow(String userID, String bookID, LocalDate borrowDate) {
-        switch(userID.charAt(0)){
+
+    public static void borrow(String userID, String itemID,String date) {  //It is my borrow method.
+        LocalDate borrowDate = LocalDate.parse(dateConverter(date));    //I used LocalDate for date issues.
+        Person myuser = null;
+        Items myitem = null;
+        String[] notBorrow = new String[2];  //There are some items which cannot be borrowed.
+
+        switch(userID.charAt(0)){   //I need to know which user is this.
             case '1':
-                Object myuser = mainObj.getMapStudent().get(userID);
+                myuser = (Person) mainObj.getMapStudent().get(userID);
+                notBorrow[0] = "reference";
                 break;
             case '2':
-                Object myacademic = mainObj.getMapAcademic().get(userID);
+                myuser = (Person) mainObj.getMapAcademic().get(userID);
                 break;
             case '3':
-                Object myguest = mainObj.getMapGuest().get(userID);
+                myuser = (Person) mainObj.getMapGuest().get(userID);
+                notBorrow[0] = "rare";
+                notBorrow[1] = "limited";
                 break;
             default:
                 System.out.println("Unknown user detected!");
                 break;
         }
-    }
 
+        switch(itemID.charAt(0)){     //I need to know what item is this.
+            case '1':
+                myitem = (Items) mainObj.getMapBook().get(itemID);
+                break;
+            case '2':
+                myitem = (Items) mainObj.getMapMagazine().get(itemID);
+                break;
+            case '3':
+                myitem = (Items) mainObj.getMapDVD().get(itemID);
+                break;
+            default:
+                System.out.println("Unknown item detected!");
+                break;
+        }
+        assert myitem != null;
+        myitem.setBorrowDate(borrowDate);
+
+        assert myuser != null;
+
+        if(myuser.getPenalty() < 6){  //If your penalty is at least 6,you cannot borrow anything.
+            if (myuser.getBorrowedItem() < myuser.getMaxItem()){    //There is a limit for borrowing.
+                if(myitem.getType().equals(notBorrow[0])){ //This person cannot borrow this item due to its rarity.
+                    System.out.println(myuser.getName() + " cannot borrow " + notBorrow[0] + " item!");
+                }
+                else if(myitem.getType().equals(notBorrow[1])){   //This person cannot borrow this item due to its rarity.
+                    System.out.println(myuser.getName() + " cannot borrow " + notBorrow[1] + " item!");
+                }
+                else{
+                    System.out.println(myuser.getName() + " successfully borrowed! " + myitem.getTitle());
+                }
+            }
+            else{
+                System.out.println(myuser.getName() + " cannot borrow the " + myitem.getTitle() + ", since the borrow limit has been reached!");
+            }
+        }
+        else{
+            System.out.println(myuser.getName() + " cannot borrow " + myitem.getTitle() + ", you must first pay the penalty amount! " + myuser.getPenalty() + "$");
+        }
+        myuser.setBorrowedItem();
+    }
+    //I need a date converter to use LocalDate.I need my date in this form "Y-M-D"
+    public static String dateConverter(String date){
+        String[] dateInfo = date.split("/");
+        String day = dateInfo[0];
+        String month = dateInfo[1];
+        String year = dateInfo[2];
+        return year + "-" + month + "-" + day;
+    }
 }

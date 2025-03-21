@@ -6,7 +6,7 @@ public class Academic extends Person {
 
     //CONSTRUCTOR
     Academic(String name, String ID, String phone, String faculty, String department, String title) {
-        super(ID, name, phone,3,15,0);
+        super(ID, name, phone,3,15,0,0);
         this.faculty = faculty;
         this.department = department;
         this.title = title;

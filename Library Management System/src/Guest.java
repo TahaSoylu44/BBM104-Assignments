@@ -4,7 +4,7 @@ public class Guest extends Person {
 
     //CONSTRUCTOR
     Guest(String name, String ID, String phone, String occupation) {
-        super(ID, name, phone,1,7,0);
+        super(ID, name, phone,1,7,0,0);
         this.occupation = occupation;
     }
 
