@@ -7,7 +7,7 @@ public class Student extends Person {
     private String grade;
 
     //CONSTRUCTOR
-    Student(String name, String ID, String phone, String faculty, String department, String grade) {
+    Student(String name, String ID, String phone, String department, String faculty, String grade) {
         super(ID, name, phone,5,30,0, new ArrayList<>());
         this.faculty = faculty;
         this.department = department;

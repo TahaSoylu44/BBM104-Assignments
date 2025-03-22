@@ -7,7 +7,7 @@ public class Academic extends Person {
     private String title;
 
     //CONSTRUCTOR
-    Academic(String name, String ID, String phone, String faculty, String department, String title) {
+    Academic(String name, String ID, String phone, String department, String faculty, String title) {
         super(ID, name, phone,3,15,0, new ArrayList<>());
         this.faculty = faculty;
         this.department = department;
