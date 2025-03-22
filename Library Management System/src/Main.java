@@ -17,60 +17,18 @@ public class Main {
 
     private HashMap<String, Object> mapBook = new HashMap<>();
     private HashMap<String, Object> mapMagazine = new HashMap<>();
-    private HashMap<String, Object> mapDVD = new HashMap<>();
+    private HashMap<String, Object> mapDVD = new HashMap<>();       //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
     private HashMap<String, Object> mapStudent = new HashMap<>();
     private HashMap<String, Object> mapAcademic = new HashMap<>();
     private HashMap<String, Object> mapGuest = new HashMap<>();
 
     //Getter for hashmaps
-    public HashMap<String, Object> getMapBook() {
-        return mapBook;
-    }
-
-    public HashMap<String, Object> getMapMagazine() {
-        return mapMagazine;
-    }
-
-    public HashMap<String, Object> getMapDVD() {
-        return mapDVD;
-    }
-
-    public HashMap<String, Object> getMapStudent() {
-        return mapStudent;
-    }
-
-    public HashMap<String, Object> getMapAcademic() {
-        return mapAcademic;
-    }
-
-    public HashMap<String, Object> getMapGuest() {
-        return mapGuest;
-    }
-
-    //Setter for hashmaps
-    public void setMapBook(HashMap<String, Object> mapBook) {
-        this.mapBook = mapBook;
-    }
-
-    public void setMapMagazine(HashMap<String, Object> mapMagazine) {
-        this.mapMagazine = mapMagazine;
-    }
-
-    public void setMapDVD(HashMap<String, Object> mapDVD) {
-        this.mapDVD = mapDVD;
-    }
-
-    public void setMapStudent(HashMap<String, Object> mapStudent) {
-        this.mapStudent = mapStudent;
-    }
-
-    public void setMapAcademic(HashMap<String, Object> mapAcademic) {
-        this.mapAcademic = mapAcademic;
-    }
-
-    public void setMapGuest(HashMap<String, Object> mapGuest) {
-        this.mapGuest = mapGuest;
-    }
+    public HashMap<String, Object> getMapBook() {return mapBook;}
+    public HashMap<String, Object> getMapMagazine() {return mapMagazine;}
+    public HashMap<String, Object> getMapDVD() {return mapDVD;}
+    public HashMap<String, Object> getMapStudent() {return mapStudent;}
+    public HashMap<String, Object> getMapAcademic() {return mapAcademic;}
+    public HashMap<String, Object> getMapGuest() {return mapGuest;}
 
     // Function to read a text file
     public static ArrayList<String[]> readTxtAsObject(String input) {
@@ -153,21 +111,6 @@ public class Main {
         //COMMANDS
         //String commandsTXT = args[2];
         ArrayList<String[]> commandInfo = readTxtAsObject("commands7.txt");  //Keeps the "commands.txt"
-        /*   //Is Hashmap correct?
-        System.out.println("*************************");
-        System.out.println(mainObj.getMapBook());
-        System.out.println("*************************");
-        System.out.println(mainObj.getMapMagazine());
-        System.out.println("*************************");
-        System.out.println(mainObj.getMapDVD());
-        System.out.println("*************************");
-        System.out.println(mainObj.getMapStudent());
-        System.out.println("*************************");
-        System.out.println(mainObj.getMapAcademic());
-        System.out.println("*************************");
-        System.out.println(mainObj.getMapGuest());
-        System.out.println("*************************");
-        */
 
         /*
         //What is the command?
@@ -188,57 +131,10 @@ public class Main {
             }
         }
          */
-
-
-        /* //Items and users are correct?
-        System.out.println("############ITEMS####################");
-        for (Books book : mybooks) {
-            System.out.println(book.getID() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getCategory() + " " + book.getType());
-        }
-        System.out.println("*************************************");
-        for (Magazine magazine : mymagazines) {
-            System.out.println(magazine.getID() + " " + magazine.getTitle() + " " + magazine.getPublisher() + " " + magazine.getCategory() + " " + magazine.getType());
-        }
-        System.out.println("*************************************");
-        for (DVD dvd : myDVDs) {
-            System.out.println(dvd.getID() + " " + dvd.getTitle() + " " + dvd.getDirector() + " " + dvd.getCategory() + " " + dvd.getType());
-        }
-
-        System.out.println("################USERS################");
-        System.out.println("*************************************");
-        for (Student student : mystudents) {
-            System.out.println(student.getID() + " " + student.getName() + " " + student.getPhone() + " " + student.getFaculty() + " " + student.getDepartment() + " " + student.getGrade());
-        }
-        System.out.println("*************************************");
-        for (Academic academic : myacademic) {
-            System.out.println(academic.getID() + " " + academic.getName() + " " + academic.getPhone() + " " + academic.getFaculty() + " " + academic.getDepartment() + " " + academic.getTitle());
-        }
-        System.out.println("*************************************");
-        for (Guest guest : myguests) {
-            System.out.println(guest.getID() + " " + guest.getName() + " " + guest.getPhone() + " " + guest.getOccupation());
-        }
-        System.out.println("*************************************");
-         */
-
-        /*
-        Books anybook;
-        anybook = (Books) mainObj.getMapBook().get("1001");
-
-        Student anystudent;
-        anystudent = (Student) mainObj.getMapStudent().get("1001");
-
-        borrow("1001","1001","10/03/2025");
-        System.out.println(anystudent.getBorrowedItems());
-        System.out.println(anybook.getOwner());
-        System.out.println(anybook.getBorrowDate());
-
-         */
-
-        displayItems();
     }
 
     public static void borrow(String userID, String itemID, String date) {  //It is my borrow method.
-        LocalDate borrowDate = LocalDate.parse(dateConverter(date));    //I used LocalDate for date issues.
+        LocalDate borrowDate = LocalDate.parse(StringToLocalDate(date));    //I used LocalDate for date issues.
         Person myuser = null;
         Items myitem = null;
         String[] notBorrow = new String[2];  //There are some items which cannot be borrowed.
@@ -324,12 +220,22 @@ public class Main {
     }
 
     //I need a date converter to use LocalDate.I need my date in this form "Y-M-D"
-    public static String dateConverter(String date) {
+    public static String StringToLocalDate(String date) {
         String[] dateInfo = date.split("/");
         String day = dateInfo[0];
         String month = dateInfo[1];
         String year = dateInfo[2];
         return year + "-" + month + "-" + day;
+    }
+
+    //I need a date converter to implement the "borrow date" to "output.txt".To do that,I need the String one.
+    public static String LocalDateToString(LocalDate localDate) {
+        String dateString = localDate.toString();
+        String[] dateInfo = dateString.split("-");
+        String day = dateInfo[2];
+        String month = dateInfo[1];
+        String year = dateInfo[0];
+        return day + "/" + month + "/" + year;
     }
 
     public static void returning(String userID, String itemID) {   //It is the method which provides returning actions.
@@ -379,7 +285,8 @@ public class Main {
         return myuser;
     }
 
-    public static void pay(String userID) { //Paying penalty
+    //Paying penalty
+    public static void pay(String userID) {
         Person myuser = null;
 
         myuser = whichUser(userID, myuser);
@@ -390,6 +297,7 @@ public class Main {
         System.out.println(myuser.getName() + " has paid penalty.");
     }
 
+    //displaying Users
     public static void displayUsers() {
         if (!mainObj.mystudents.isEmpty()) {
             for (Student user : mainObj.mystudents) {
@@ -417,6 +325,7 @@ public class Main {
         }
     }
 
+    //I utilized a method which prints the common parts of displayUsers."Do not Repeat Yourself."
     public static void printUser(Person user){
         System.out.print("------ ");
         System.out.print("User Information for " + user.getID());
@@ -425,6 +334,7 @@ public class Main {
         System.out.print(" Phone: " + user.getPhone());
     }
 
+    //I utilized a method which prints the common parts of displayItems."Do not Repeat Yourself."
     public static void printItem(Items item){
         System.out.print("------ ");
         System.out.print("Item Information for " + item.getID());
@@ -434,12 +344,15 @@ public class Main {
 
         if(item.getOwner() != null) {
             System.out.print(" Status: Borrowed");
+            System.out.print(" Borrowed Date: " + LocalDateToString(item.getBorrowDate()));
+            System.out.print(" Borrowed by: " + item.getOwner() + "\n");
         }
         else {
-            System.out.print(" Status: Available");
+            System.out.print(" Status: Available" + "\n");
         }
     }
 
+    //displaying Items
     public static void displayItems() {
         if (!mainObj.mybooks.isEmpty()) {
             for (Books book : mainObj.mybooks) {
@@ -452,7 +365,7 @@ public class Main {
         if (!mainObj.mymagazines.isEmpty()) {
             for (Magazine magazine : mainObj.mymagazines) {
                 printItem(magazine);
-                System.out.print("\nPublisher: " + magazine.getPublisher());
+                System.out.print("Publisher: " + magazine.getPublisher());
                 System.out.print(" Category: " + magazine.getCategory() + "\n");
                 System.out.println();
             }
@@ -460,7 +373,7 @@ public class Main {
         if (!mainObj.myDVDs.isEmpty()) {
             for (DVD dvd : mainObj.myDVDs) {
                 printItem(dvd);
-                System.out.print("\nDirector: " + dvd.getDirector());
+                System.out.print("Director: " + dvd.getDirector());
                 System.out.print(" Category: " + dvd.getCategory());
                 System.out.print(" Runtime: " + dvd.getRunTime() + "\n");
                 System.out.println();
@@ -468,7 +381,3 @@ public class Main {
         }
     }
 }
-
-
-
-
