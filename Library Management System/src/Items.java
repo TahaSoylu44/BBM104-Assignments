@@ -1,6 +1,4 @@
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Locale;
 
 public abstract class Items extends Library {
     //VARIABLES

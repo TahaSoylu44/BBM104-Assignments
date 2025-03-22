@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Academic extends Person {
     //VARIABLES
     private String faculty;
@@ -6,7 +8,7 @@ public class Academic extends Person {
 
     //CONSTRUCTOR
     Academic(String name, String ID, String phone, String faculty, String department, String title) {
-        super(ID, name, phone,3,15,0,0);
+        super(ID, name, phone,3,15,0, new ArrayList<>());
         this.faculty = faculty;
         this.department = department;
         this.title = title;

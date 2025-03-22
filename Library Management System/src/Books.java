@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 public class Books extends Items {
     //VARIABLES
     private String author;

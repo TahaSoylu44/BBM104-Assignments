@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Main {
     public static Main mainObj = new Main(); //I needed a main object to reach the hashmaps.
@@ -187,17 +188,19 @@ public class Main {
         System.out.println("*************************************");
          */
 
+        /*
+        Books anybook;
+        anybook = (Books) mainObj.getMapBook().get("1001");
 
-        borrow("3001","1001","09/02/2025");
-        borrow("3001","1002","09/02/2025");
-        borrow("3001","1003","09/02/2025");
-        borrow("3001","1004","09/02/2025");
-        borrow("3002","1003","12/03/2025");
-        borrow("3001","1004","10/03/2025");
-        borrow("3001","3005","13/03/2025");
+        Student anystudent;
+        anystudent = (Student) mainObj.getMapStudent().get("1001");
 
+        borrow("1001","1001","10/03/2025");
+        System.out.println(anystudent.getBorrowedItems());
+        System.out.println(anybook.getOwner());
+        System.out.println(anybook.getBorrowDate());
 
-
+         */
     }
 
 
@@ -245,8 +248,31 @@ public class Main {
 
         assert myuser != null;
 
-        if(myuser.getPenalty() < 6){  //If your penalty is at least 6,you cannot borrow anything.
-            if (myuser.getBorrowedItem() < myuser.getMaxItem()){    //There is a limit for borrowing.
+        //Calculating Penalty
+        ArrayList<Items> MyBorrowedItemList = myuser.getBorrowedItems();
+        ArrayList<Items> beDeleted = new ArrayList<>(); //I will delete them because,if dueDate is reached,the item will be returned.
+
+        for(int i = 0; i < MyBorrowedItemList.size(); i++){
+            if(MyBorrowedItemList.get(i) != null){
+                Items item = MyBorrowedItemList.get(i);
+                long betweenDays = ChronoUnit.DAYS.between(MyBorrowedItemList.get(i).getBorrowDate(), borrowDate);
+
+                if(betweenDays > myuser.getMaxItem()){
+                    beDeleted.add(item);
+                    myuser.setPenaltyPlus();
+                    item.setOwner(null);
+                    item.setBorrowDate(null);
+                    System.out.println("MyBorrowedList " + MyBorrowedItemList);
+                }
+            }
+        }
+
+        for(Items item : beDeleted){          //The items are returned and they left the borrowed list.
+            MyBorrowedItemList.remove(item);
+        }
+
+        if(myuser.getPenalty() < 6){  //If you have a penalty,you cannot borrow anything.
+            if (myuser.getBorrowedItems().size() < myuser.getMaxItem()){    //There is a limit for borrowing.
                 if(myitem.getType().equals(notBorrow[0])){ //This person cannot borrow this item due to its rarity.
                     System.out.println(myuser.getName() + " cannot borrow " + notBorrow[0] + " item!");
                 }
@@ -255,6 +281,9 @@ public class Main {
                 }
                 else{
                     System.out.println(myuser.getName() + " successfully borrowed! " + myitem.getTitle());
+                    myuser.setBorrowedItemsAdd(myitem);
+                    myitem.setOwner(myuser.getName());
+                    myitem.setBorrowDate(borrowDate);
                 }
             }
             else{
@@ -264,8 +293,8 @@ public class Main {
         else{
             System.out.println(myuser.getName() + " cannot borrow " + myitem.getTitle() + ", you must first pay the penalty amount! " + myuser.getPenalty() + "$");
         }
-        myuser.setBorrowedItem();
     }
+
     //I need a date converter to use LocalDate.I need my date in this form "Y-M-D"
     public static String dateConverter(String date){
         String[] dateInfo = date.split("/");
@@ -273,5 +302,63 @@ public class Main {
         String month = dateInfo[1];
         String year = dateInfo[2];
         return year + "-" + month + "-" + day;
+    }
+
+    public static void returning(String userID, String itemID) {   //It is the method which provides returning actions.
+        Person myuser = null;
+        Items myitem = null;
+
+        myuser = whichUser(userID, myuser);  //Thanks to this method,we know the user we deal with.
+        switch(itemID.charAt(0)){
+            case '1':
+                myitem = (Items) mainObj.getMapBook().get(itemID);
+                break;
+            case '2':
+                myitem = (Items) mainObj.getMapMagazine().get(itemID);
+                break;
+            case '3':
+                myitem = (Items) mainObj.getMapDVD().get(itemID);
+                break;
+            default:
+                System.out.println("Unknown item detected!");
+        }
+
+        assert myitem != null;
+        myitem.setOwner(null);
+        myitem.setBorrowDate(null);
+
+        assert myuser != null;
+        myuser.setBorrowedItemsRemove(myitem);
+
+        System.out.println(myuser.getName() + " successfully returned " + myitem.getTitle());
+    }
+
+    public static Person whichUser(String userID, Person myuser) {    //Which user are we dealing with?
+        switch(userID.charAt(0)){                                     //It returns a Person object in accordance with the ID.
+            case '1':
+                myuser = (Person) mainObj.getMapStudent().get(userID);
+                break;
+            case '2':
+                myuser = (Person) mainObj.getMapAcademic().get(userID);
+                break;
+            case '3':
+                myuser = (Person) mainObj.getMapGuest().get(userID);
+                break;
+            default:
+                System.out.println("Unknown user detected!");
+                break;
+        }
+        return myuser;
+    }
+
+    public static void pay(String userID){ //Paying penalty
+        Person myuser = null;
+
+        myuser = whichUser(userID, myuser);
+
+        assert myuser != null;
+        myuser.setPenaltyPaid();
+
+        System.out.println(myuser.getName() + " has paid penalty.");
     }
 }
