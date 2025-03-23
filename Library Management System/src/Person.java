@@ -31,11 +31,6 @@ public abstract class Person {
     public ArrayList<Items> getBorrowedItems() {return borrowedItems;}
 
     //SETTER
-    public void setID(String ID) {this.ID = ID;}
-    public void setName(String name) {this.name = name;}
-    public void setPhone(String phone) {this.phone = phone;}
-    public void setMaxItem(int maxItem) {this.maxItem = maxItem;}
-    public void setOverDue(int overDue) {this.overDue = overDue;}
     public void setPenaltyPlus() {this.penalty += 2;}
     public void setPenaltyPaid() {this.penalty = 0;}
     public void setBorrowedItemsAdd(Items item){this.borrowedItems.add(item);}

@@ -1,8 +1,8 @@
 public class DVD extends Items{
     //VARIABLES
-    private String director;
-    private String category;
-    private String runTime;
+    private final String director;
+    private final String category;
+    private final String runTime;
 
     //CONSTRUCTOR
     DVD(String ID, String title, String director, String category,String runTime, String type) {
@@ -16,9 +16,6 @@ public class DVD extends Items{
     public String getID() {
         return ID;
     }
-    public String getTitle() {
-        return title;
-    }
     public String getDirector() {
         return director;
     }
@@ -28,27 +25,7 @@ public class DVD extends Items{
     public String getRunTime() {
         return runTime;
     }
-    public String getType() {
-        return type;
-    }
 
     //SETTERS
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public void setDirector(String director) {
-        this.director = director;
-    }
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    public void setRunTime(String runTime) {
-        this.runTime = runTime;
-    }
-    public void setType(String type) {
-        this.type = type;
-    }
+    //No need to implement setter for DVD Class.
 }

@@ -1,7 +1,7 @@
 public class Books extends Items {
     //VARIABLES
-    private String author;
-    private String category;
+    private final String author;
+    private final String category;
 
     //CONSTRUCTOR
     Books(String ID, String title, String author, String category, String type) {
@@ -19,10 +19,5 @@ public class Books extends Items {
     }
 
     //SETTERS
-    public void setAuthor(String author){
-        this.author = author;
-    }
-    public void setCategory(String category){
-        this.category = category;
-    }
+    //No need to implement setter for Books Class.
 }

@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class Academic extends Person {
     //VARIABLES
-    private String faculty;
-    private String department;
-    private String title;
+    private final String faculty;
+    private final String department;
+    private final String title;
 
     //CONSTRUCTOR
     Academic(String name, String ID, String phone, String department, String faculty, String title) {
@@ -20,7 +20,5 @@ public class Academic extends Person {
     public String getTitle() {return title;}
 
     //SETTER
-    public void setFaculty(String faculty) {this.faculty = faculty;}
-    public void setDepartment(String department) {this.department = department;}
-    public void setTitle(String title) {this.title = title;}
+    //No need to implement setter for Academic Class.
 }

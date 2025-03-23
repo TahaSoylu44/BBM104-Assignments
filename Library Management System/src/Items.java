@@ -26,12 +26,7 @@ public abstract class Items {
     public int getOverDue() {return overDue;}
 
     //SETTER
-    public void setID(String ID) {this.ID = ID;}
-    public void setTitle(String title) {this.title = title;}
-    public void setType(String type) {this.type = type;}
     public void setBorrowDate(LocalDate borrowDate) {this.borrowDate = borrowDate;}
     public void setOwner(String owner) {this.owner = owner;}
     public void setOverDue(int overDue) {this.overDue = overDue;}
-
-    //BORROW
 }

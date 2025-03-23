@@ -25,7 +25,7 @@ public class Main {
     private HashMap<String, Object> mapAcademic = new HashMap<>();
     private HashMap<String, Object> mapGuest = new HashMap<>();
 
-    public int printCount = 0;  //I needed a variable to handle "two line problem".When it equals to zero,no need to add a line between the last user and the first item.
+    public int printCount = 0;  //I needed a variable to handle "two line problem".When it equals to zero,no need to add a line between the last user and the first item while printing.
 
     //Getter for hashmaps
     public HashMap<String, Object> getMapBook() {return mapBook;}
@@ -121,7 +121,6 @@ public class Main {
         String commandsTXT = args[2];
         ArrayList<String[]> commandInfo = readTxtAsObject(commandsTXT);  //Keeps the "commands.txt"
 
-        //What is the command?
         for (String[] command : commandInfo) {
             switch (command[0]) {   //CommandName
                 case "borrow":
@@ -144,20 +143,6 @@ public class Main {
                     break;
             }
         }
-
-        /*
-        borrow("3001","1001","09/02/2025");
-        borrow("3001","1002","09/02/2025");
-        borrow("3001","1003","09/02/2025");
-        borrow("3001","1004","09/02/2025");
-        borrow("3002","1003","12/03/2025");
-        pay("3001");
-        borrow("3001","1004","10/03/2025");
-        returning("3001","1004");
-        borrow("3001","3005","13/03/2025");
-        displayUsers();
-        displayItems();
-         */
     }
 
     public static void borrow(String userID, String itemID, String date) {  //It is my borrow method.
@@ -212,8 +197,8 @@ public class Main {
 
                 if (betweenDays > myuser.getMaxItem()) {
                     beDeleted.add(item);
-                    myuser.setPenaltyPlus();
-                    item.setOwner(null);
+                    myuser.setPenaltyPlus();   //Penalty +2$
+                    item.setOwner(null);       //Returned
                     item.setBorrowDate(null);
                 }
             }
@@ -391,7 +376,7 @@ public class Main {
 
     //I utilized a method which prints the common parts of displayItems."Do not Repeat Yourself."
     public static void printItem(Items item){
-        if(mainObj.printCount != 0){
+        if(mainObj.printCount != 0){    //I need to handle "two line problem".There is no second enter between the last user and the last item.
             System.out.println();
         }
         System.out.print("\n------ ");

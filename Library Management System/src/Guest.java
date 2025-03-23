@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Guest extends Person {
     //VARIABLES
-    private String occupation;
+    private final String occupation;
 
     //CONSTRUCTOR
     Guest(String name, String ID, String phone, String occupation) {
@@ -14,5 +14,5 @@ public class Guest extends Person {
     public String getOccupation() {return occupation;}
 
     //SETTER
-    public void setOccupation(String occupation) {this.occupation = occupation;}
+    //No need to implement setter for Guest Class.
 }
