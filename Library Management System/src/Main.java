@@ -22,6 +22,8 @@ public class Main {
     private HashMap<String, Object> mapAcademic = new HashMap<>();
     private HashMap<String, Object> mapGuest = new HashMap<>();
 
+    public int printCount = 0;  //I needed a variable to handle "two line problem".When it equals to zero,no need to add a line between the last user and the first item.
+
     //Getter for hashmaps
     public HashMap<String, Object> getMapBook() {return mapBook;}
     public HashMap<String, Object> getMapMagazine() {return mapMagazine;}
@@ -131,6 +133,20 @@ public class Main {
             }
         }
          */
+
+        /*
+        borrow("3001","1001","09/02/2025");
+        borrow("3001","1002","09/02/2025");
+        borrow("3001","1003","09/02/2025");
+        borrow("3001","1004","09/02/2025");
+        borrow("3002","1003","12/03/2025");
+        pay("3001");
+        borrow("3001","1004","10/03/2025");
+        returning("3001","1004");
+        borrow("3001","3005","13/03/2025");
+        displayUsers();
+        displayItems();
+         */
     }
 
     public static void borrow(String userID, String itemID, String date) {  //It is my borrow method.
@@ -171,8 +187,6 @@ public class Main {
                 System.out.println("Unknown item detected!");
                 break;
         }
-        assert myitem != null;
-        myitem.setBorrowDate(borrowDate);
 
         assert myuser != null;
 
@@ -190,13 +204,22 @@ public class Main {
                     myuser.setPenaltyPlus();
                     item.setOwner(null);
                     item.setBorrowDate(null);
-                    System.out.println("MyBorrowedList " + MyBorrowedItemList);
                 }
             }
         }
 
-        for (Items item : beDeleted) {          //The items are returned and they left the borrowed list.
-            MyBorrowedItemList.remove(item);
+        if (!beDeleted.isEmpty()) {  //Is there any item which will be returned?
+            for (Items item : beDeleted) {          //The items are returned and they left the borrowed list.
+                MyBorrowedItemList.remove(item);
+            }
+        }
+        //The item might have been borrowed.Need to check if it should be returned.
+        assert myitem != null;
+        if(myitem.getOwner() != null) {
+            long isAvailable = ChronoUnit.DAYS.between(myitem.getBorrowDate(), borrowDate);
+            if(isAvailable > myitem.getOverDue()) {
+                myitem.setOwner(null);
+            }
         }
 
         if (myuser.getPenalty() < 6) {  //If you have a penalty,you cannot borrow anything.
@@ -206,10 +229,16 @@ public class Main {
                 } else if (myitem.getType().equals(notBorrow[1])) {   //This person cannot borrow this item due to its rarity.
                     System.out.println(myuser.getName() + " cannot borrow " + notBorrow[1] + " item!");
                 } else {
-                    System.out.println(myuser.getName() + " successfully borrowed! " + myitem.getTitle());
-                    myuser.setBorrowedItemsAdd(myitem);
-                    myitem.setOwner(myuser.getName());
-                    myitem.setBorrowDate(borrowDate);
+                    if(myitem.getOwner() == null) {         //If an item had been borrowed,of course we cannot borrow it.
+                        System.out.println(myuser.getName() + " successfully borrowed! " + myitem.getTitle());
+                        myuser.setBorrowedItemsAdd(myitem);
+                        myitem.setOwner(myuser.getName());
+                        myitem.setBorrowDate(borrowDate);
+                        myitem.setOverDue(myuser.getOverDue());
+                    }
+                    else{    //this item does not have an owner,we can borrow it.
+                        System.out.println(myuser.getName() + " cannot borrow " + myitem.getTitle() + ", it is not available!");
+                    }
                 }
             } else {
                 System.out.println(myuser.getName() + " cannot borrow the " + myitem.getTitle() + ", since the borrow limit has been reached!");
@@ -304,7 +333,7 @@ public class Main {
                 printUser(user);
                 System.out.print("\nFaculty: " + user.getFaculty());
                 System.out.print(" Department: " + user.getDepartment());
-                System.out.print(" Grade: " + user.getGrade() + "th" + "\n");
+                System.out.print(" Grade: " + user.getGrade() + "th");
                 System.out.println();
             }
         }
@@ -312,22 +341,23 @@ public class Main {
             for (Academic user : mainObj.myacademic) {
                 printUser(user);
                 System.out.print("\nFaculty: " + user.getFaculty());
-                System.out.print(" Department: " + user.getDepartment() + "\n");
+                System.out.print(" Department: " + user.getDepartment());
                 System.out.println();
             }
         }
         if (!mainObj.myguests.isEmpty()) {
             for (Guest user : mainObj.myguests) {
                 printUser(user);
-                System.out.print("\nOccupation :" + user.getOccupation() + "\n");
+                System.out.print("\nOccupation :" + user.getOccupation());
                 System.out.println();
             }
         }
+
     }
 
     //I utilized a method which prints the common parts of displayUsers."Do not Repeat Yourself."
     public static void printUser(Person user){
-        System.out.print("------ ");
+        System.out.print("\n------ ");
         System.out.print("User Information for " + user.getID());
         System.out.print(" ------ ");
         System.out.print("\nName: " + user.getName());
@@ -336,7 +366,10 @@ public class Main {
 
     //I utilized a method which prints the common parts of displayItems."Do not Repeat Yourself."
     public static void printItem(Items item){
-        System.out.print("------ ");
+        if(mainObj.printCount != 0){
+            System.out.println();
+        }
+        System.out.print("\n------ ");
         System.out.print("Item Information for " + item.getID());
         System.out.print(" ------ ");
         System.out.print("\nID: " + item.getID());
@@ -358,16 +391,16 @@ public class Main {
             for (Books book : mainObj.mybooks) {
                 printItem(book);
                 System.out.print("Author: " + book.getAuthor());
-                System.out.print(" Genre: " + book.getCategory() + "\n");
-                System.out.println();
+                System.out.print(" Genre: " + book.getCategory());
+                mainObj.printCount++;
             }
         }
         if (!mainObj.mymagazines.isEmpty()) {
             for (Magazine magazine : mainObj.mymagazines) {
                 printItem(magazine);
                 System.out.print("Publisher: " + magazine.getPublisher());
-                System.out.print(" Category: " + magazine.getCategory() + "\n");
-                System.out.println();
+                System.out.print(" Category: " + magazine.getCategory());
+                mainObj.printCount++;
             }
         }
         if (!mainObj.myDVDs.isEmpty()) {
@@ -375,8 +408,8 @@ public class Main {
                 printItem(dvd);
                 System.out.print("Director: " + dvd.getDirector());
                 System.out.print(" Category: " + dvd.getCategory());
-                System.out.print(" Runtime: " + dvd.getRunTime() + "\n");
-                System.out.println();
+                System.out.print(" Runtime: " + dvd.getRunTime());
+                mainObj.printCount++;
             }
         }
     }
