@@ -252,7 +252,7 @@ public class Main {
                     }
                 }
             } else {
-                System.out.println(myuser.getName() + " cannot borrow the " + myitem.getTitle() + ", since the borrow limit has been reached!");
+                System.out.println(myuser.getName() + " cannot borrow " + myitem.getTitle() + ", since the borrow limit has been reached!");
             }
         } else {
             System.out.println(myuser.getName() + " cannot borrow " + myitem.getTitle() + ", you must first pay the penalty amount! " + myuser.getPenalty() + "$");
@@ -334,32 +334,46 @@ public class Main {
         assert myuser != null;
         myuser.setPenaltyPaid();
 
-        System.out.println(myuser.getName() + " has paid penalty.");
+        System.out.println(myuser.getName() + " has paid penalty");
     }
 
     //displaying Users
     public static void displayUsers() {
+        //I need to call the academic members with their titles.
         if (!mainObj.mystudents.isEmpty()) {
             for (Student user : mainObj.mystudents) {
                 printUser(user);
                 System.out.print("\nFaculty: " + user.getFaculty());
                 System.out.print(" Department: " + user.getDepartment());
-                System.out.print(" Grade: " + user.getGrade() + "th");
+                System.out.print(" Grade: " + user.getGrade() + "th\n");
+                if(user.getPenalty() != 0){
+                    System.out.print("\nPenalty: " + user.getPenalty() + "$");
+                }
                 System.out.println();
             }
         }
         if (!mainObj.myacademic.isEmpty()) {
             for (Academic user : mainObj.myacademic) {
-                printUser(user);
+                System.out.print("\n------ ");
+                System.out.print("User Information for " + user.getID());
+                System.out.print(" ------");
+                System.out.print("\nName: " + user.getTitle() + " " + user.getName());
+                System.out.print(" Phone: " + user.getPhone());
                 System.out.print("\nFaculty: " + user.getFaculty());
                 System.out.print(" Department: " + user.getDepartment());
+                if(user.getPenalty() != 0){
+                    System.out.print("\nPenalty: " + user.getPenalty() + "$");
+                }
                 System.out.println();
             }
         }
         if (!mainObj.myguests.isEmpty()) {
             for (Guest user : mainObj.myguests) {
                 printUser(user);
-                System.out.print("\nOccupation :" + user.getOccupation());
+                System.out.print("\nOccupation: " + user.getOccupation());
+                if(user.getPenalty() != 0){
+                    System.out.print("\nPenalty: " + user.getPenalty() + "$");
+                }
                 System.out.println();
             }
         }
@@ -370,7 +384,7 @@ public class Main {
     public static void printUser(Person user){
         System.out.print("\n------ ");
         System.out.print("User Information for " + user.getID());
-        System.out.print(" ------ ");
+        System.out.print(" ------");
         System.out.print("\nName: " + user.getName());
         System.out.print(" Phone: " + user.getPhone());
     }
@@ -382,7 +396,7 @@ public class Main {
         }
         System.out.print("\n------ ");
         System.out.print("Item Information for " + item.getID());
-        System.out.print(" ------ ");
+        System.out.print(" ------");
         System.out.print("\nID: " + item.getID());
         System.out.print(" Name: " + item.getTitle());
 
