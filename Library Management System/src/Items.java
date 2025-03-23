@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public abstract class Items extends Library {
+public abstract class Items {
     //VARIABLES
     protected String ID;
     protected String title;

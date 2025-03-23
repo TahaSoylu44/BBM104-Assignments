@@ -1,0 +1,8 @@
+borrow,1001,1001,01/02/2025
+borrow,1001,1002,01/02/2025
+borrow,1001,1003,01/02/2025
+borrow,1001,1004,10/03/2025
+pay,1001
+borrow,1001,1004,10/03/2025
+displayUsers
+displayItems

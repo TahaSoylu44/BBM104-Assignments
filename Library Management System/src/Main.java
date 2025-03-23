@@ -1,4 +1,7 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.LocalDate;
@@ -35,7 +38,7 @@ public class Main {
     // Function to read a text file
     public static ArrayList<String[]> readTxtAsObject(String input) {
         ArrayList<String[]> data = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(input))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get(input)), StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(","); // Split the line by comma
@@ -47,10 +50,14 @@ public class Main {
         return data;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        //OUTPUT
+        String myoutput = args[3];
+        PrintStream fileOut = new PrintStream(Files.newOutputStream(Paths.get(myoutput)), true, "UTF-8");
+        System.setOut(fileOut);
         //ITEMS
-        //String itemsTXT = args[0];
-        ArrayList<String[]> itemsData = readTxtAsObject("items.txt");  //Keeps the "items.txt"
+        String itemsTXT = args[0];
+        ArrayList<String[]> itemsData = readTxtAsObject(itemsTXT);  //Keeps the "items.txt"
 
         for (int i = 0; i < itemsData.size(); i++) {
             String[] itemInfo = itemsData.get(i);
@@ -75,8 +82,8 @@ public class Main {
         }
 
         //USERS
-        //String usersTXT = args[1];
-        ArrayList<String[]> usersData = readTxtAsObject("users.txt");  //Keeps the "users.txt"
+        String usersTXT = args[1];
+        ArrayList<String[]> usersData = readTxtAsObject(usersTXT);  //Keeps the "users.txt"
 
         for (int i = 0; i < usersData.size(); i++) {
             String[] usersInfo = usersData.get(i);
@@ -111,28 +118,32 @@ public class Main {
         for (Guest guest : mainObj.myguests) {mainObj.getMapGuest().put(guest.ID, guest);}
 
         //COMMANDS
-        //String commandsTXT = args[2];
-        ArrayList<String[]> commandInfo = readTxtAsObject("commands7.txt");  //Keeps the "commands.txt"
+        String commandsTXT = args[2];
+        ArrayList<String[]> commandInfo = readTxtAsObject(commandsTXT);  //Keeps the "commands.txt"
 
-        /*
         //What is the command?
         for (String[] command : commandInfo) {
-            String commandName = command[0];
-            if (commandName.equals("borrow")) {
-                System.out.println(command[1] + " borrows " + command[2] + " on " + command[3]);
-            } else if (commandName.equals("return")) {
-                System.out.println(command[1] + " returns " + command[2]);
-            } else if (commandName.equals("pay")) {
-                System.out.println(command[1] + " pays his/her penalty.");
-            } else if (commandName.equals("displayUsers")) {
-                System.out.println("displaying users...");
-            } else if (commandName.equals("displayItems")) {
-                System.out.println("displaying items...");
-            } else {
-                System.out.println("Unknown command");
+            switch (command[0]) {   //CommandName
+                case "borrow":
+                    borrow(command[1], command[2], command[3]);
+                    break;
+                case "return":
+                    returning(command[1], command[2]);
+                    break;
+                case "pay":
+                    pay(command[1]);
+                    break;
+                case "displayUsers":
+                    displayUsers();
+                    break;
+                case "displayItems":
+                    displayItems();
+                    break;
+                default:
+                    System.out.println("Unknown command");
+                    break;
             }
         }
-         */
 
         /*
         borrow("3001","1001","09/02/2025");
