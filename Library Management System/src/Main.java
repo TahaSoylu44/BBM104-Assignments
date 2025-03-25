@@ -189,13 +189,12 @@ public class Main {
         //Calculating Penalty
         ArrayList<Items> MyBorrowedItemList = myuser.getBorrowedItems();
         ArrayList<Items> beDeleted = new ArrayList<>(); //I will delete them because,if dueDate is reached,the item will be returned.
-
         for (int i = 0; i < MyBorrowedItemList.size(); i++) {
             if (MyBorrowedItemList.get(i) != null) {
                 Items item = MyBorrowedItemList.get(i);
-                long betweenDays = ChronoUnit.DAYS.between(MyBorrowedItemList.get(i).getBorrowDate(), borrowDate);
+                long betweenDays = ChronoUnit.DAYS.between(MyBorrowedItemList.get(i).getBorrowDate(), borrowDate) + 1;
 
-                if (betweenDays > myuser.getMaxItem()) {
+                if (betweenDays >= myuser.getOverDue()) {
                     beDeleted.add(item);
                     myuser.setPenaltyPlus();   //Penalty +2$
                     item.setOwner(null);       //Returned
@@ -212,9 +211,36 @@ public class Main {
         //The item might have been borrowed.Need to check if it should be returned.
         assert myitem != null;
         if(myitem.getOwner() != null) {
-            long isAvailable = ChronoUnit.DAYS.between(myitem.getBorrowDate(), borrowDate);
-            if(isAvailable > myitem.getOverDue()) {
-                myitem.setOwner(null);
+            long isAvailable = ChronoUnit.DAYS.between(myitem.getBorrowDate(), borrowDate) + 1;
+
+            if(isAvailable >= myitem.getOverDue()) {
+                boolean isFound = false;            //Time to find the person who borrowed the item.He or she get penalty.
+                for(Student student : mainObj.mystudents) {
+                    if(student.getName().equals(myitem.getOwner())) {
+                        student.setPenaltyPlus();
+                        isFound = true;
+                        break;
+                    }
+                }
+                if(!isFound) {
+                    for(Academic academic : mainObj.myacademic) {
+                        if(academic.getName().equals(myitem.getOwner())) {
+                            academic.setPenaltyPlus();
+                            isFound = true;
+                            break;
+                        }
+                    }
+                }
+                if(!isFound) {
+                    for(Guest guest : mainObj.myguests) {
+                        if(guest.getName().equals(myitem.getOwner())) {
+                            guest.setPenaltyPlus();
+                            isFound = true;
+                            break;
+                        }
+                    }
+                }
+                myitem.setOwner(null);     //After penalty,this does not have an owner.
             }
         }
 
@@ -330,7 +356,7 @@ public class Main {
                 printUser(user);
                 System.out.print("\nFaculty: " + user.getFaculty());
                 System.out.print(" Department: " + user.getDepartment());
-                System.out.print(" Grade: " + user.getGrade() + "th\n");
+                System.out.print(" Grade: " + user.getGrade() + "th");
                 if(user.getPenalty() != 0){
                     System.out.print("\nPenalty: " + user.getPenalty() + "$");
                 }
