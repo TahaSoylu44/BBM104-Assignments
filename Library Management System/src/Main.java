@@ -10,22 +10,20 @@ import java.time.temporal.ChronoUnit;
 public class Main {
     public static Main mainObj = new Main(); //I needed a main object to reach the hashmaps.
 
-    public ArrayList<Student> mystudents = new ArrayList<>();       //It should keep the datas about the students.
-    public ArrayList<Academic> myacademic = new ArrayList<>();//It should keep the datas about the academic members.
-    public ArrayList<Guest> myguests = new ArrayList<>();          //It should keep the datas about the guests.
+    public ArrayList<Student> myStudents = new ArrayList<>();       //It should keep the datas about the students.
+    public ArrayList<Academic> myAcademic = new ArrayList<>();//It should keep the datas about the academic members.
+    public ArrayList<Guest> myGuests = new ArrayList<>();          //It should keep the datas about the guests.
 
-    public ArrayList<Books> mybooks = new ArrayList<>();       //It should keep the datas about the books.
-    public ArrayList<Magazine> mymagazines = new ArrayList<>();//It should keep the datas about the magazines.
+    public ArrayList<Books> myBooks = new ArrayList<>();       //It should keep the datas about the books.
+    public ArrayList<Magazine> myMagazines = new ArrayList<>();//It should keep the datas about the magazines.
     public ArrayList<DVD> myDVDs = new ArrayList<>();          //It should keep the datas about the DVDs.
 
-    private HashMap<String, Object> mapBook = new HashMap<>();
-    private HashMap<String, Object> mapMagazine = new HashMap<>();
-    private HashMap<String, Object> mapDVD = new HashMap<>();       //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
-    private HashMap<String, Object> mapStudent = new HashMap<>();
-    private HashMap<String, Object> mapAcademic = new HashMap<>();
-    private HashMap<String, Object> mapGuest = new HashMap<>();
-
-    public int printCount = 0;  //I needed a variable to handle "two line problem".When it equals to zero,no need to add a line between the last user and the first item while printing.
+    private final HashMap<String, Object> mapBook = new HashMap<>();
+    private final HashMap<String, Object> mapMagazine = new HashMap<>();
+    private final HashMap<String, Object> mapDVD = new HashMap<>();       //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
+    private final HashMap<String, Object> mapStudent = new HashMap<>();
+    private final HashMap<String, Object> mapAcademic = new HashMap<>();
+    private final HashMap<String, Object> mapGuest = new HashMap<>();
 
     //Getter for hashmaps
     public HashMap<String, Object> getMapBook() {return mapBook;}
@@ -52,9 +50,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         //OUTPUT
-        String myoutput = args[3];
-        PrintStream fileOut = new PrintStream(Files.newOutputStream(Paths.get(myoutput)), true, "UTF-8");
+        String myOutput = args[3];
+        PrintStream fileOut = new PrintStream(Files.newOutputStream(Paths.get(myOutput)), true, "UTF-8");
         System.setOut(fileOut);
+
         //ITEMS
         String itemsTXT = args[0];
         ArrayList<String[]> itemsData = readTxtAsObject(itemsTXT);  //Keeps the "items.txt"
@@ -65,11 +64,11 @@ public class Main {
             switch (itemInfo[0]) {
                 case "B":
                     Books book = new Books(itemInfo[1], itemInfo[2], itemInfo[3], itemInfo[4], itemInfo[5]);
-                    mainObj.mybooks.add(book);
+                    mainObj.myBooks.add(book);
                     break;
                 case "M":
                     Magazine magazine = new Magazine(itemInfo[1], itemInfo[2], itemInfo[3], itemInfo[4], itemInfo[5]);
-                    mainObj.mymagazines.add(magazine);
+                    mainObj.myMagazines.add(magazine);
                     break;
                 case "D":
                     DVD dvd = new DVD(itemInfo[1], itemInfo[2], itemInfo[3], itemInfo[4], itemInfo[5], itemInfo[6]);
@@ -91,15 +90,15 @@ public class Main {
             switch (usersInfo[0]) {
                 case "S":
                     Student student = new Student(usersInfo[1], usersInfo[2], usersInfo[3], usersInfo[4], usersInfo[5], usersInfo[6]);
-                    mainObj.mystudents.add(student);
+                    mainObj.myStudents.add(student);
                     break;
                 case "A":
                     Academic academic = new Academic(usersInfo[1], usersInfo[2], usersInfo[3], usersInfo[4], usersInfo[5], usersInfo[6]);
-                    mainObj.myacademic.add(academic);
+                    mainObj.myAcademic.add(academic);
                     break;
                 case "G":
                     Guest guest = new Guest(usersInfo[1], usersInfo[2], usersInfo[3], usersInfo[4]);
-                    mainObj.myguests.add(guest);
+                    mainObj.myGuests.add(guest);
                     break;
                 default:
                     System.out.println("Unknown user detected!");
@@ -110,12 +109,12 @@ public class Main {
         //////In here,I used the hashmap since I could not reach the object I want while it is in a ArrayList.//////
         //When I put my objects into a hashmap,I reach them whenever I want "O(1) complexity".That's why,I used it./
 
-        for (Books book : mainObj.mybooks) {mainObj.getMapBook().put(book.ID, book);}
-        for (Magazine magazine : mainObj.mymagazines) {mainObj.getMapMagazine().put(magazine.ID, magazine);}
+        for (Books book : mainObj.myBooks) {mainObj.getMapBook().put(book.ID, book);}
+        for (Magazine magazine : mainObj.myMagazines) {mainObj.getMapMagazine().put(magazine.ID, magazine);}
         for (DVD dvd : mainObj.myDVDs) {mainObj.getMapDVD().put(dvd.ID, dvd);}
-        for (Student student : mainObj.mystudents) {mainObj.getMapStudent().put(student.ID, student);}
-        for (Academic academic : mainObj.myacademic) {mainObj.getMapAcademic().put(academic.ID, academic);}
-        for (Guest guest : mainObj.myguests) {mainObj.getMapGuest().put(guest.ID, guest);}
+        for (Student student : mainObj.myStudents) {mainObj.getMapStudent().put(student.ID, student);}
+        for (Academic academic : mainObj.myAcademic) {mainObj.getMapAcademic().put(academic.ID, academic);}
+        for (Guest guest : mainObj.myGuests) {mainObj.getMapGuest().put(guest.ID, guest);}
 
         //COMMANDS
         String commandsTXT = args[2];
@@ -133,7 +132,9 @@ public class Main {
                     pay(command[1]);
                     break;
                 case "displayUsers":
+                    System.out.println();
                     displayUsers();
+                    System.out.println();
                     break;
                 case "displayItems":
                     displayItems();
@@ -144,6 +145,7 @@ public class Main {
             }
         }
     }
+
 
     public static void borrow(String userID, String itemID, String date) {  //It is my borrow method.
         LocalDate borrowDate = LocalDate.parse(StringToLocalDate(date));    //I used LocalDate for date issues.
@@ -192,9 +194,9 @@ public class Main {
         for (int i = 0; i < MyBorrowedItemList.size(); i++) {
             if (MyBorrowedItemList.get(i) != null) {
                 Items item = MyBorrowedItemList.get(i);
-                long betweenDays = ChronoUnit.DAYS.between(MyBorrowedItemList.get(i).getBorrowDate(), borrowDate) + 1;
+                long betweenDays = ChronoUnit.DAYS.between(MyBorrowedItemList.get(i).getBorrowDate(), LocalDate.now()) + 1;
 
-                if (betweenDays >= myuser.getOverDue()) {
+                if (betweenDays > myuser.getOverDue()) {
                     beDeleted.add(item);
                     myuser.setPenaltyPlus();   //Penalty +2$
                     item.setOwner(null);       //Returned
@@ -205,17 +207,17 @@ public class Main {
 
         if (!beDeleted.isEmpty()) {  //Is there any item which will be returned?
             for (Items item : beDeleted) {          //The items are returned and they left the borrowed list.
-                MyBorrowedItemList.remove(item);
+                myuser.setBorrowedItemsRemove(item);
             }
         }
         //The item might have been borrowed.Need to check if it should be returned.
         assert myitem != null;
         if(myitem.getOwner() != null) {
-            long isAvailable = ChronoUnit.DAYS.between(myitem.getBorrowDate(), borrowDate) + 1;
+            long isAvailable = ChronoUnit.DAYS.between(myitem.getBorrowDate(), LocalDate.now()) + 1;
 
-            if(isAvailable >= myitem.getOverDue()) {
-                boolean isFound = false;            //Time to find the person who borrowed the item.He or she get penalty.
-                for(Student student : mainObj.mystudents) {
+            if(isAvailable > myitem.getOverDue()) {
+                boolean isFound = false;            //Time to find the person who borrowed the item.He or she gets penalty.
+                for(Student student : mainObj.myStudents) {
                     if(student.getName().equals(myitem.getOwner())) {
                         student.setPenaltyPlus();
                         isFound = true;
@@ -223,7 +225,7 @@ public class Main {
                     }
                 }
                 if(!isFound) {
-                    for(Academic academic : mainObj.myacademic) {
+                    for(Academic academic : mainObj.myAcademic) {
                         if(academic.getName().equals(myitem.getOwner())) {
                             academic.setPenaltyPlus();
                             isFound = true;
@@ -232,18 +234,20 @@ public class Main {
                     }
                 }
                 if(!isFound) {
-                    for(Guest guest : mainObj.myguests) {
+                    for(Guest guest : mainObj.myGuests) {
                         if(guest.getName().equals(myitem.getOwner())) {
                             guest.setPenaltyPlus();
+                            guest.setBorrowedItemsRemove(myitem);
                             isFound = true;
                             break;
                         }
                     }
                 }
-                myitem.setOwner(null);     //After penalty,this does not have an owner.
+                myitem.setOwner(null);     //After penalty,this object does not have an owner.
             }
         }
 
+        //Time to learn if borrowing operation is valid or not.Checked some conditions.
         if (myuser.getPenalty() < 6) {  //If you have a penalty,you cannot borrow anything.
             if (myuser.getBorrowedItems().size() < myuser.getMaxItem()) {    //There is a limit for borrowing.
                 if (myitem.getType().equals(notBorrow[0])) { //This person cannot borrow this item due to its rarity.
@@ -350,9 +354,8 @@ public class Main {
 
     //displaying Users
     public static void displayUsers() {
-        //I need to call the academic members with their titles.
-        if (!mainObj.mystudents.isEmpty()) {
-            for (Student user : mainObj.mystudents) {
+        if (!mainObj.myStudents.isEmpty()) {
+            for (Student user : mainObj.myStudents) {
                 printUser(user);
                 System.out.print("\nFaculty: " + user.getFaculty());
                 System.out.print(" Department: " + user.getDepartment());
@@ -363,8 +366,9 @@ public class Main {
                 System.out.println();
             }
         }
-        if (!mainObj.myacademic.isEmpty()) {
-            for (Academic user : mainObj.myacademic) {
+        if (!mainObj.myAcademic.isEmpty()) {
+            for (Academic user : mainObj.myAcademic) {
+                //I need to call the academic members with their titles.
                 System.out.print("\n------ ");
                 System.out.print("User Information for " + user.getID());
                 System.out.print(" ------");
@@ -378,8 +382,8 @@ public class Main {
                 System.out.println();
             }
         }
-        if (!mainObj.myguests.isEmpty()) {
-            for (Guest user : mainObj.myguests) {
+        if (!mainObj.myGuests.isEmpty()) {
+            for (Guest user : mainObj.myGuests) {
                 printUser(user);
                 System.out.print("\nOccupation: " + user.getOccupation());
                 if(user.getPenalty() != 0){
@@ -388,7 +392,6 @@ public class Main {
                 System.out.println();
             }
         }
-
     }
 
     //I utilized a method which prints the common parts of displayUsers."Do not Repeat Yourself."
@@ -401,10 +404,8 @@ public class Main {
     }
 
     //I utilized a method which prints the common parts of displayItems."Do not Repeat Yourself."
+
     public static void printItem(Items item){
-        if(mainObj.printCount != 0){    //I need to handle "two line problem".There is no second enter between the last user and the last item.
-            System.out.println();
-        }
         System.out.print("\n------ ");
         System.out.print("Item Information for " + item.getID());
         System.out.print(" ------");
@@ -423,20 +424,20 @@ public class Main {
 
     //displaying Items
     public static void displayItems() {
-        if (!mainObj.mybooks.isEmpty()) {
-            for (Books book : mainObj.mybooks) {
+        if (!mainObj.myBooks.isEmpty()) {
+            for (Books book : mainObj.myBooks) {
                 printItem(book);
                 System.out.print("Author: " + book.getAuthor());
                 System.out.print(" Genre: " + book.getCategory());
-                mainObj.printCount++;
+                System.out.println();
             }
         }
-        if (!mainObj.mymagazines.isEmpty()) {
-            for (Magazine magazine : mainObj.mymagazines) {
+        if (!mainObj.myMagazines.isEmpty()) {
+            for (Magazine magazine : mainObj.myMagazines) {
                 printItem(magazine);
                 System.out.print("Publisher: " + magazine.getPublisher());
                 System.out.print(" Category: " + magazine.getCategory());
-                mainObj.printCount++;
+                System.out.println();
             }
         }
         if (!mainObj.myDVDs.isEmpty()) {
@@ -445,7 +446,7 @@ public class Main {
                 System.out.print("Director: " + dvd.getDirector());
                 System.out.print(" Category: " + dvd.getCategory());
                 System.out.print(" Runtime: " + dvd.getRunTime());
-                mainObj.printCount++;
+                System.out.println();
             }
         }
     }
