@@ -1,3 +1,4 @@
+import java.awt.print.Book;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -7,14 +8,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Main {
-    //Created the objects which represent their classes.
-    public static Student defaultStudent = new Student("default","default", "default", "default", "default", "default");
-    public static Academic defaultAcademic = new Academic("default","default", "default", "default", "default", "default");
-    public static Guest defaultGuest = new Guest("default","default", "default", "default");
-    public static Books defaultBook = new Books("default","default", "default", "default", "default");
-    public static Magazine defaultMagazine = new Magazine("default","default", "default", "default", "default");
-    public static DVD defaultDVD = new DVD("default","default", "default", "default","default","default");
-
     // Function to read a text file
     public static ArrayList<String[]> readTxtAsObject(String input) {
         ArrayList<String[]> data = new ArrayList<>();
@@ -32,13 +25,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         //OUTPUT
-        //String myOutput = args[3];
-        //PrintStream fileOut = new PrintStream(Files.newOutputStream(Paths.get(myOutput)), true, "UTF-8");
-        //System.setOut(fileOut);
+        String myOutput = args[3];
+        PrintStream fileOut = new PrintStream(Files.newOutputStream(Paths.get(myOutput)), true, "UTF-8");
+        System.setOut(fileOut);
 
         //ITEMS
-        //String itemsTXT = args[0];
-        ArrayList<String[]> itemsData = readTxtAsObject("items.txt");  //Keeps the "items.txt"
+        String itemsTXT = args[0];
+        ArrayList<String[]> itemsData = readTxtAsObject(itemsTXT);  //Keeps the "items.txt"
 
         for (int i = 0; i < itemsData.size(); i++) {
             String[] itemInfo = itemsData.get(i);
@@ -46,15 +39,15 @@ public class Main {
             switch (itemInfo[0]) {
                 case "B":
                     Books book = new Books(itemInfo[1], itemInfo[2], itemInfo[3], itemInfo[4], itemInfo[5]);
-                    defaultBook.setMyBooks(book);
+                    Books.setMyBooks(book);
                     break;
                 case "M":
                     Magazine magazine = new Magazine(itemInfo[1], itemInfo[2], itemInfo[3], itemInfo[4], itemInfo[5]);
-                    defaultMagazine.setMyMagazine(magazine);
+                    Magazine.setMyMagazine(magazine);
                     break;
                 case "D":
                     DVD dvd = new DVD(itemInfo[1], itemInfo[2], itemInfo[3], itemInfo[4], itemInfo[5], itemInfo[6]);
-                    defaultDVD.setMyDVDs(dvd);
+                    DVD.setMyDVDs(dvd);
                     break;
                 default:
                     System.out.println("Unknown item detected!");
@@ -63,8 +56,8 @@ public class Main {
         }
 
         //USERS
-        //String usersTXT = args[1];
-        ArrayList<String[]> usersData = readTxtAsObject("users.txt");  //Keeps the "users.txt"
+        String usersTXT = args[1];
+        ArrayList<String[]> usersData = readTxtAsObject(usersTXT);  //Keeps the "users.txt"
 
         for (int i = 0; i < usersData.size(); i++) {
             String[] usersInfo = usersData.get(i);
@@ -72,17 +65,16 @@ public class Main {
             switch (usersInfo[0]) {
                 case "S":
                     Student student = new Student(usersInfo[1], usersInfo[2], usersInfo[3], usersInfo[4], usersInfo[5], usersInfo[6]);
-                    //defaultStudent.getMyStudents().add(student);
-                    defaultStudent.setMyStudents(student);
+                    Student.setMyStudents(student);
 
                     break;
                 case "A":
                     Academic academic = new Academic(usersInfo[1], usersInfo[2], usersInfo[3], usersInfo[4], usersInfo[5], usersInfo[6]);
-                    defaultAcademic.setMyAcademic(academic);
+                    Academic.setMyAcademic(academic);
                     break;
                 case "G":
                     Guest guest = new Guest(usersInfo[1], usersInfo[2], usersInfo[3], usersInfo[4]);
-                    defaultGuest.setMyGuest(guest);
+                    Guest.setMyGuest(guest);
                     break;
                 default:
                     System.out.println("Unknown user detected!");
@@ -93,16 +85,16 @@ public class Main {
         //////In here,I used the hashmap since I could not reach the object I want while it is in a ArrayList.//////
         //When I put my objects into a hashmap,I reach them whenever I want "O(1) complexity".That's why,I used it./
 
-        for (Books book : defaultBook.getMyBooks()) {defaultBook.setMapBooks(book.ID, book);}
-        for (Magazine magazine : defaultMagazine.getMyMagazine()) {defaultMagazine.setMapMagazine(magazine.ID, magazine);}
-        for (DVD dvd : defaultDVD.getMyDVDs()) {defaultDVD.setMapDVDs(dvd.ID, dvd);}
-        for (Student student : defaultStudent.getMyStudents()) {defaultStudent.setMapStudent(student.ID, student);}
-        for (Academic academic : defaultAcademic.getMyAcademic()) {defaultAcademic.setMapAcademic(academic.ID, academic);}
-        for (Guest guest : defaultGuest.getMyGuest()) {defaultGuest.setMapGuest(guest.ID, guest);}
+        for (Books book : Books.getMyBooks()) {Books.setMapBooks(book.ID, book);}
+        for (Magazine magazine : Magazine.getMyMagazine()) {Magazine.setMapMagazine(magazine.ID, magazine);}
+        for (DVD dvd : DVD.getMyDVDs()) {DVD.setMapDVDs(dvd.ID, dvd);}
+        for (Student student : Student.getMyStudents()) {Student.setMapStudent(student.ID, student);}
+        for (Academic academic : Academic.getMyAcademic()) {Academic.setMapAcademic(academic.ID, academic);}
+        for (Guest guest : Guest.getMyGuest()) {Guest.setMapGuest(guest.ID, guest);}
 
         //COMMANDS
-        //String commandsTXT = args[2];
-        ArrayList<String[]> commandInfo = readTxtAsObject("commands1.txt");  //Keeps the "commands.txt"
+        String commandsTXT = args[2];
+        ArrayList<String[]> commandInfo = readTxtAsObject(commandsTXT);  //Keeps the "commands.txt"
 
         for (String[] command : commandInfo) {
             switch (command[0]) {   //CommandName
@@ -139,14 +131,14 @@ public class Main {
 
         switch (userID.charAt(0)) {   //I need to know which user is this.
             case '1':
-                myuser = (Person) defaultStudent.getMapStudent().get(userID);
+                myuser = (Person) Student.getMapStudent().get(userID);
                 notBorrow[0] = "reference";
                 break;
             case '2':
-                myuser = (Person) defaultAcademic.getMapAcademic().get(userID);
+                myuser = (Person) Academic.getMapAcademic().get(userID);
                 break;
             case '3':
-                myuser = (Person) defaultGuest.getMapGuest().get(userID);
+                myuser = (Person) Guest.getMapGuest().get(userID);
                 notBorrow[0] = "rare";
                 notBorrow[1] = "limited";
                 break;
@@ -157,13 +149,13 @@ public class Main {
 
         switch (itemID.charAt(0)) {     //I need to know what item is this.
             case '1':
-                myitem = (Items) defaultBook.getMapBooks().get(itemID);
+                myitem = (Items) Books.getMapBooks().get(itemID);
                 break;
             case '2':
-                myitem = (Items) defaultMagazine.getMapMagazine().get(itemID);
+                myitem = (Items) Magazine.getMapMagazine().get(itemID);
                 break;
             case '3':
-                myitem = (Items) defaultDVD.getMapDVDs().get(itemID);
+                myitem = (Items) DVD.getMapDVDs().get(itemID);
                 break;
             default:
                 System.out.println("Unknown item detected!");
@@ -201,7 +193,7 @@ public class Main {
 
             if(isAvailable > myitem.getOverDue()) {
                 boolean isFound = false;            //Time to find the person who borrowed the item.He or she gets penalty.
-                for(Student student : defaultStudent.getMyStudents()) {
+                for(Student student : Student.getMyStudents()) {
                     if(student.getName().equals(myitem.getOwner())) {
                         student.setPenaltyPlus();
                         isFound = true;
@@ -209,7 +201,7 @@ public class Main {
                     }
                 }
                 if(!isFound) {
-                    for(Academic academic : defaultAcademic.getMyAcademic()) {
+                    for(Academic academic : Academic.getMyAcademic()) {
                         if(academic.getName().equals(myitem.getOwner())) {
                             academic.setPenaltyPlus();
                             isFound = true;
@@ -218,7 +210,7 @@ public class Main {
                     }
                 }
                 if(!isFound) {
-                    for(Guest guest : defaultGuest.getMyGuest()) {
+                    for(Guest guest : Guest.getMyGuest()) {
                         if(guest.getName().equals(myitem.getOwner())) {
                             guest.setPenaltyPlus();
                             guest.setBorrowedItemsRemove(myitem);
@@ -284,13 +276,13 @@ public class Main {
         myuser = whichUser(userID, myuser);  //Thanks to this method,we know the user we deal with.
         switch (itemID.charAt(0)) {
             case '1':
-                myitem = (Items) defaultBook.getMapBooks().get(itemID);
+                myitem = (Items) Books.getMapBooks().get(itemID);
                 break;
             case '2':
-                myitem = (Items) defaultMagazine.getMapMagazine().get(itemID);
+                myitem = (Items) Magazine.getMapMagazine().get(itemID);
                 break;
             case '3':
-                myitem = (Items) defaultDVD.getMapDVDs().get(itemID);
+                myitem = (Items) DVD.getMapDVDs().get(itemID);
                 break;
             default:
                 System.out.println("Unknown item detected!");
@@ -309,13 +301,13 @@ public class Main {
     public static Person whichUser(String userID, Person myuser) {    //Which user are we dealing with?
         switch (userID.charAt(0)) {                                     //It returns a Person object in accordance with the ID.
             case '1':
-                myuser = (Person) defaultStudent.getMapStudent().get(userID);
+                myuser = (Person) Student.getMapStudent().get(userID);
                 break;
             case '2':
-                myuser = (Person) defaultAcademic.getMapAcademic().get(userID);
+                myuser = (Person) Academic.getMapAcademic().get(userID);
                 break;
             case '3':
-                myuser = (Person) defaultGuest.getMapGuest().get(userID);
+                myuser = (Person) Guest.getMapGuest().get(userID);
                 break;
             default:
                 System.out.println("Unknown user detected!");
@@ -338,8 +330,8 @@ public class Main {
 
     //displaying Users
     public static void displayUsers() {
-        if (!defaultStudent.getMyStudents().isEmpty()) {
-            for (Student user : defaultStudent.getMyStudents()) {
+        if (!Student.getMyStudents().isEmpty()) {
+            for (Student user : Student.getMyStudents()) {
                 printUser(user);
                 System.out.print("\nFaculty: " + user.getFaculty());
                 System.out.print(" Department: " + user.getDepartment());
@@ -350,8 +342,8 @@ public class Main {
                 System.out.println();
             }
         }
-        if (!defaultAcademic.getMyAcademic().isEmpty()) {
-            for (Academic user : defaultAcademic.getMyAcademic()) {
+        if (!Academic.getMyAcademic().isEmpty()) {
+            for (Academic user : Academic.getMyAcademic()) {
                 //I need to call the academic members with their titles.
                 System.out.print("\n------ ");
                 System.out.print("User Information for " + user.getID());
@@ -366,8 +358,8 @@ public class Main {
                 System.out.println();
             }
         }
-        if (!defaultGuest.getMyGuest().isEmpty()) {
-            for (Guest user : defaultGuest.getMyGuest()) {
+        if (!Guest.getMyGuest().isEmpty()) {
+            for (Guest user : Guest.getMyGuest()) {
                 printUser(user);
                 System.out.print("\nOccupation: " + user.getOccupation());
                 if(user.getPenalty() != 0){
@@ -408,24 +400,24 @@ public class Main {
 
     //displaying Items
     public static void displayItems() {
-        if (!defaultBook.getMyBooks().isEmpty()) {
-            for (Books book : defaultBook.getMyBooks()) {
+        if (!Books.getMyBooks().isEmpty()) {
+            for (Books book : Books.getMyBooks()) {
                 printItem(book);
                 System.out.print("Author: " + book.getAuthor());
                 System.out.print(" Genre: " + book.getCategory());
                 System.out.println();
             }
         }
-        if (!defaultMagazine.getMyMagazine().isEmpty()) {
-            for (Magazine magazine : defaultMagazine.getMyMagazine()) {
+        if (!Magazine.getMyMagazine().isEmpty()) {
+            for (Magazine magazine : Magazine.getMyMagazine()) {
                 printItem(magazine);
                 System.out.print("Publisher: " + magazine.getPublisher());
                 System.out.print(" Category: " + magazine.getCategory());
                 System.out.println();
             }
         }
-        if (!defaultDVD.getMyDVDs().isEmpty()) {
-            for (DVD dvd : defaultDVD.getMyDVDs()) {
+        if (!DVD.getMyDVDs().isEmpty()) {
+            for (DVD dvd : DVD.getMyDVDs()) {
                 printItem(dvd);
                 System.out.print("Director: " + dvd.getDirector());
                 System.out.print(" Category: " + dvd.getCategory());

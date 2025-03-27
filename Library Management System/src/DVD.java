@@ -7,7 +7,7 @@ public class DVD extends Items{
     private final String category;
     private final String runTime;
     private static ArrayList<DVD> myDVDs = new ArrayList<>();         //It should keep the datas about the DVDs.
-    private final HashMap<String, Object> mapDVD = new HashMap<>();   //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
+    private static final HashMap<String, Object> mapDVD = new HashMap<>();   //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
 
     //CONSTRUCTOR
     DVD(String ID, String title, String director, String category,String runTime, String type) {
@@ -30,10 +30,10 @@ public class DVD extends Items{
     public String getRunTime() {
         return runTime;
     }
-    public ArrayList<DVD> getMyDVDs() {return myDVDs;}
-    public HashMap<String, Object> getMapDVDs() {return mapDVD;}
+    public static ArrayList<DVD> getMyDVDs() {return myDVDs;}
+    public static HashMap<String, Object> getMapDVDs() {return mapDVD;}
 
     //SETTERS
-    public void setMyDVDs(DVD dvd) {myDVDs.add(dvd);}
-    public void setMapDVDs(String key, Object value) {mapDVD.put(key, value);}
+    public static void setMyDVDs(DVD dvd) {myDVDs.add(dvd);}
+    public static void setMapDVDs(String key, Object value) {mapDVD.put(key, value);}
 }

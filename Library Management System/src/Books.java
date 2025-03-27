@@ -6,7 +6,7 @@ public class Books extends Items {
     private final String author;
     private final String category;
     private static ArrayList<Books> myBooks = new ArrayList<>();    //It should keep the datas about the books.
-    private HashMap<String, Object> mapBook = new HashMap<>();      //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
+    private static HashMap<String, Object> mapBook = new HashMap<>();      //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
 
     //CONSTRUCTOR
     Books(String ID, String title, String author, String category, String type) {
@@ -22,10 +22,10 @@ public class Books extends Items {
     public String getCategory(){
         return category;
     }
-    public ArrayList<Books> getMyBooks() {return myBooks;}
-    public HashMap<String, Object> getMapBooks() {return mapBook;}
+    public static ArrayList<Books> getMyBooks() {return myBooks;}
+    public static HashMap<String, Object> getMapBooks() {return mapBook;}
 
     //SETTERS
-    public void setMyBooks(Books book) {myBooks.add(book);}
-    public void setMapBooks(String key, Object value) {mapBook.put(key, value);}
+    public static void setMyBooks(Books book) {myBooks.add(book);}
+    public static void setMapBooks(String key, Object value) {mapBook.put(key, value);}
 }
