@@ -1,7 +1,12 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Books extends Items {
     //VARIABLES
     private final String author;
     private final String category;
+    private static ArrayList<Books> myBooks = new ArrayList<>();    //It should keep the datas about the books.
+    private HashMap<String, Object> mapBook = new HashMap<>();      //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
 
     //CONSTRUCTOR
     Books(String ID, String title, String author, String category, String type) {
@@ -17,7 +22,10 @@ public class Books extends Items {
     public String getCategory(){
         return category;
     }
+    public ArrayList<Books> getMyBooks() {return myBooks;}
+    public HashMap<String, Object> getMapBooks() {return mapBook;}
 
     //SETTERS
-    //No need to implement setter for Books Class.
+    public void setMyBooks(Books book) {myBooks.add(book);}
+    public void setMapBooks(String key, Object value) {mapBook.put(key, value);}
 }
