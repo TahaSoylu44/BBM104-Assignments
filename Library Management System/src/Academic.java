@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Academic class contains specific information about academic members.
+ * Keeps academic members data's.
+ * Child class of Person class.
+ * @author Taha Soylu
+ */
 public class Academic extends Person {
     //VARIABLES
     private final String faculty;
@@ -11,6 +17,15 @@ public class Academic extends Person {
 
 
     //CONSTRUCTOR
+    /**
+     * Constructs a new Academic object with the given details.
+     * @param name        Academic member name
+     * @param ID          Academic unique identifier
+     * @param phone       Academic member phone
+     * @param department  Academic member department
+     * @param faculty     Academic member faculty
+     * @param title       What title he/she has
+     */
     Academic(String name, String ID, String phone, String department, String faculty, String title) {
         super(ID, name, phone,3,15,0, new ArrayList<>());
         this.faculty = faculty;

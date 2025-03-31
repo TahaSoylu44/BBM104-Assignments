@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * DVD class contains specific information about DVDs.
+ * Keep DVDs data's.
+ * Child class of Items class.
+ */
 public class DVD extends Items{
     //VARIABLES
     private final String director;
@@ -10,6 +15,15 @@ public class DVD extends Items{
     private static final HashMap<String, Object> mapDVD = new HashMap<>();   //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
 
     //CONSTRUCTOR
+    /**
+     * Constructs a new DVD object with the given details.
+     * @param ID         DVD ID
+     * @param title      DVD Title
+     * @param director   Director of DVD
+     * @param category   DVD Category
+     * @param runTime    DVD Run Time
+     * @param type       DVD Type
+     */
     DVD(String ID, String title, String director, String category,String runTime, String type) {
         super(ID, title, type);    //Inherited from "Items" class
         this.director = director;

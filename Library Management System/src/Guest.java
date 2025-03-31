@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Guest class contains specific information about guests.
+ * Keep guests data's.
+ * Child class of Person class.
+ * @author Taha Soylu
+ */
 public class Guest extends Person {
     //VARIABLES
     private final String occupation;
@@ -8,6 +14,13 @@ public class Guest extends Person {
     private static HashMap<String, Object> mapGuest = new HashMap<>();         //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
 
     //CONSTRUCTOR
+    /**
+     * Constructs a new Academic object with the given details.
+     * @param name         Guest name
+     * @param ID           Guest unique identifier
+     * @param phone        Guest Phone
+     * @param occupation   Guest occupation
+     */
     Guest(String name, String ID, String phone, String occupation) {
         super(ID, name, phone,1,7,0, new ArrayList<>());
         this.occupation = occupation;

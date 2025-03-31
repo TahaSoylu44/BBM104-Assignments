@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Magazine class contains specific information about magazines.
+ * Keep magazines data's.
+ * Child class of Items class.
+ */
 public class Magazine extends Items {
     //VARIABLES
     private final String publisher;
@@ -9,6 +14,14 @@ public class Magazine extends Items {
     private static HashMap<String, Object> mapMagazine = new HashMap<>();           //I will use the "HashMap" to deal with datas."ID" is my key and objects are my values.
 
     //CONSTRUCTOR
+    /**
+     * Constructs a new Magazine object with the given details.
+     * @param ID          Magazine ID
+     * @param title       Magazine Title
+     * @param publisher   Publisher of Magazine
+     * @param category    Magazine Category
+     * @param type        Magazine Type
+     */
     Magazine(String ID, String title, String publisher, String category, String type) {
         super(ID,title,type);   //Inherited from "Items" class
         this.publisher = publisher;

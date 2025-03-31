@@ -1,4 +1,3 @@
-import java.awt.print.Book;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -7,8 +6,25 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * This class is "Main" class of my project.
+ * It reads input files and writes output file.
+ * Contains general methods like reading input files,writing output files and borrowing operations.
+ * The program should be run with these parameters:
+ * args[0]: The file which contains items (items.txt)
+ * args[1]: The file which contains users (users.txt)
+ * args[2]: The file which contains commands (commands.txt)
+ * args[3]: The output file
+ * @author Taha Soylu
+ */
 public class Main {
     // Function to read a text file
+    /**
+     * Reads the input files line by line and returns an ArrayList which includes the lines.
+     * @param input        Takes my arguments as String input.
+     * @return             Returns ArrayList which includes the lines as String list seperated by comma.
+     *                     Example: ["B","1001","The Great Gatsby","F. Scott Fitzgerald","Classic Fiction","normal"]
+     */
     public static ArrayList<String[]> readTxtAsObject(String input) {
         ArrayList<String[]> data = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get(input)), StandardCharsets.UTF_8))) {
@@ -23,19 +39,26 @@ public class Main {
         return data;
     }
 
+    /**
+     * The main method which reads the files,executes the commands.
+     * @param args         Arguments written in terminal
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         //OUTPUT
         String myOutput = args[3];
         PrintStream fileOut = new PrintStream(Files.newOutputStream(Paths.get(myOutput)), true, "UTF-8");
-        System.setOut(fileOut);
+        System.setOut(fileOut);  //Do not write to the terminal,write to file.
 
         //ITEMS
         String itemsTXT = args[0];
         ArrayList<String[]> itemsData = readTxtAsObject(itemsTXT);  //Keeps the "items.txt"
 
+        //Determining which item is this.
         for (int i = 0; i < itemsData.size(); i++) {
             String[] itemInfo = itemsData.get(i);
 
+            //Determined in accordance with first letters.
             switch (itemInfo[0]) {
                 case "B":
                     Books book = new Books(itemInfo[1], itemInfo[2], itemInfo[3], itemInfo[4], itemInfo[5]);
@@ -59,9 +82,11 @@ public class Main {
         String usersTXT = args[1];
         ArrayList<String[]> usersData = readTxtAsObject(usersTXT);  //Keeps the "users.txt"
 
+        //Determining which user is this.
         for (int i = 0; i < usersData.size(); i++) {
             String[] usersInfo = usersData.get(i);
 
+            //Determined in accordance with first letters.
             switch (usersInfo[0]) {
                 case "S":
                     Student student = new Student(usersInfo[1], usersInfo[2], usersInfo[3], usersInfo[4], usersInfo[5], usersInfo[6]);
@@ -82,12 +107,16 @@ public class Main {
             }
         }
 
-        //////In here,I used the hashmap since I could not reach the object I want while it is in a ArrayList.//////
-        //When I put my objects into a hashmap,I reach them whenever I want "O(1) complexity".That's why,I used it./
-
+        /**
+        *In here,I used the hashmap since I could not reach the object I want while it is in a ArrayList.
+        *When I put my objects into a hashmap,I reach them whenever I want "O(1) complexity".That's why,I used it.
+        *I created my HashMaps as (key: String (ID),value: Object(Person/Items))
+        */
+        //for items
         for (Books book : Books.getMyBooks()) {Books.setMapBooks(book.ID, book);}
         for (Magazine magazine : Magazine.getMyMagazine()) {Magazine.setMapMagazine(magazine.ID, magazine);}
         for (DVD dvd : DVD.getMyDVDs()) {DVD.setMapDVDs(dvd.ID, dvd);}
+        //for users
         for (Student student : Student.getMyStudents()) {Student.setMapStudent(student.ID, student);}
         for (Academic academic : Academic.getMyAcademic()) {Academic.setMapAcademic(academic.ID, academic);}
         for (Guest guest : Guest.getMyGuest()) {Guest.setMapGuest(guest.ID, guest);}
@@ -102,18 +131,18 @@ public class Main {
                     borrow(command[1], command[2], command[3]);
                     break;
                 case "return":
-                    returning(command[1], command[2]);
+                    Person.returning(command[1], command[2]);
                     break;
                 case "pay":
-                    pay(command[1]);
+                    Person.pay(command[1]);
                     break;
                 case "displayUsers":
                     System.out.println();
-                    displayUsers();
+                    Person.displayUsers();
                     System.out.println();
                     break;
                 case "displayItems":
-                    displayItems();
+                    Items.displayItems();
                     break;
                 default:
                     System.out.println("Unknown command");
@@ -122,9 +151,21 @@ public class Main {
         }
     }
 
-
-    public static void borrow(String userID, String itemID, String date) {  //It is my borrow method.
-        LocalDate borrowDate = LocalDate.parse(StringToLocalDate(date));    //I used LocalDate for date issues.
+    /**
+     * Borrow method manages borrowing operations.
+     * When the program reads "borrow" from command text,calls this method and determine if borrow operation is successful or not.
+     * 1.Detect users and items based on their IDs.
+     * 2.User has to pay the penalty?
+     * 3.The limit exceeded or not
+     * 4.Can user borrow this item in accordance with item rarity.
+     * 5.Item already has an owner or doesn't?
+     * 6.If all are OK,borrow it!
+     * @param userID     The user who wants to borrow an item
+     * @param itemID     Wanted item
+     * @param date       Operation date
+     */
+    public static void borrow(String userID, String itemID, String date) {
+        LocalDate borrowDate = LocalDate.parse(Items.StringToLocalDate(date));    //I used LocalDate for date issues.
         Person myuser = null;
         Items myitem = null;
         String[] notBorrow = new String[2];  //There are some items which cannot be borrowed.
@@ -176,13 +217,13 @@ public class Main {
                     beDeleted.add(item);
                     myuser.setPenaltyPlus();   //Penalty +2$
                     item.setOwner(null);       //Returned
-                    item.setBorrowDate(null);
+                    item.setBorrowDate(null);  //Returned
                 }
             }
         }
 
         if (!beDeleted.isEmpty()) {  //Is there any item which will be returned?
-            for (Items item : beDeleted) {          //The items are returned and they left the borrowed list.
+            for (Items item : beDeleted) {          //The items are returned, and they left the borrowed list.
                 myuser.setBorrowedItemsRemove(item);
             }
         }
@@ -238,7 +279,7 @@ public class Main {
                         myitem.setBorrowDate(borrowDate);
                         myitem.setOverDue(myuser.getOverDue());
                     }
-                    else{    //this item does not have an owner,we can borrow it.
+                    else{    //this item has an owner,we cannot borrow it.
                         System.out.println(myuser.getName() + " cannot borrow " + myitem.getTitle() + ", it is not available!");
                     }
                 }
@@ -247,183 +288,6 @@ public class Main {
             }
         } else {
             System.out.println(myuser.getName() + " cannot borrow " + myitem.getTitle() + ", you must first pay the penalty amount! " + myuser.getPenalty() + "$");
-        }
-    }
-
-    //I need a date converter to use LocalDate.I need my date in this form "Y-M-D"
-    public static String StringToLocalDate(String date) {
-        String[] dateInfo = date.split("/");
-        String day = dateInfo[0];
-        String month = dateInfo[1];
-        String year = dateInfo[2];
-        return year + "-" + month + "-" + day;
-    }
-
-    //I need a date converter to implement the "borrow date" to "output.txt".To do that,I need the String one.
-    public static String LocalDateToString(LocalDate localDate) {
-        String dateString = localDate.toString();
-        String[] dateInfo = dateString.split("-");
-        String day = dateInfo[2];
-        String month = dateInfo[1];
-        String year = dateInfo[0];
-        return day + "/" + month + "/" + year;
-    }
-
-    public static void returning(String userID, String itemID) {   //It is the method which provides returning actions.
-        Person myuser = null;
-        Items myitem = null;
-
-        myuser = whichUser(userID, myuser);  //Thanks to this method,we know the user we deal with.
-        switch (itemID.charAt(0)) {
-            case '1':
-                myitem = (Items) Books.getMapBooks().get(itemID);
-                break;
-            case '2':
-                myitem = (Items) Magazine.getMapMagazine().get(itemID);
-                break;
-            case '3':
-                myitem = (Items) DVD.getMapDVDs().get(itemID);
-                break;
-            default:
-                System.out.println("Unknown item detected!");
-        }
-
-        assert myitem != null;
-        myitem.setOwner(null);
-        myitem.setBorrowDate(null);
-
-        assert myuser != null;
-        myuser.setBorrowedItemsRemove(myitem);
-
-        System.out.println(myuser.getName() + " successfully returned " + myitem.getTitle());
-    }
-
-    public static Person whichUser(String userID, Person myuser) {    //Which user are we dealing with?
-        switch (userID.charAt(0)) {                                     //It returns a Person object in accordance with the ID.
-            case '1':
-                myuser = (Person) Student.getMapStudent().get(userID);
-                break;
-            case '2':
-                myuser = (Person) Academic.getMapAcademic().get(userID);
-                break;
-            case '3':
-                myuser = (Person) Guest.getMapGuest().get(userID);
-                break;
-            default:
-                System.out.println("Unknown user detected!");
-                break;
-        }
-        return myuser;
-    }
-
-    //Paying penalty
-    public static void pay(String userID) {
-        Person myuser = null;
-
-        myuser = whichUser(userID, myuser);
-
-        assert myuser != null;
-        myuser.setPenaltyPaid();
-
-        System.out.println(myuser.getName() + " has paid penalty");
-    }
-
-    //displaying Users
-    public static void displayUsers() {
-        if (!Student.getMyStudents().isEmpty()) {
-            for (Student user : Student.getMyStudents()) {
-                printUser(user);
-                System.out.print("\nFaculty: " + user.getFaculty());
-                System.out.print(" Department: " + user.getDepartment());
-                System.out.print(" Grade: " + user.getGrade() + "th");
-                if(user.getPenalty() != 0){
-                    System.out.print("\nPenalty: " + user.getPenalty() + "$");
-                }
-                System.out.println();
-            }
-        }
-        if (!Academic.getMyAcademic().isEmpty()) {
-            for (Academic user : Academic.getMyAcademic()) {
-                //I need to call the academic members with their titles.
-                System.out.print("\n------ ");
-                System.out.print("User Information for " + user.getID());
-                System.out.print(" ------");
-                System.out.print("\nName: " + user.getTitle() + " " + user.getName());
-                System.out.print(" Phone: " + user.getPhone());
-                System.out.print("\nFaculty: " + user.getFaculty());
-                System.out.print(" Department: " + user.getDepartment());
-                if(user.getPenalty() != 0){
-                    System.out.print("\nPenalty: " + user.getPenalty() + "$");
-                }
-                System.out.println();
-            }
-        }
-        if (!Guest.getMyGuest().isEmpty()) {
-            for (Guest user : Guest.getMyGuest()) {
-                printUser(user);
-                System.out.print("\nOccupation: " + user.getOccupation());
-                if(user.getPenalty() != 0){
-                    System.out.print("\nPenalty: " + user.getPenalty() + "$");
-                }
-                System.out.println();
-            }
-        }
-    }
-
-    //I utilized a method which prints the common parts of displayUsers."Do not Repeat Yourself."
-    public static void printUser(Person user){
-        System.out.print("\n------ ");
-        System.out.print("User Information for " + user.getID());
-        System.out.print(" ------");
-        System.out.print("\nName: " + user.getName());
-        System.out.print(" Phone: " + user.getPhone());
-    }
-
-    //I utilized a method which prints the common parts of displayItems."Do not Repeat Yourself."
-
-    public static void printItem(Items item){
-        System.out.print("\n------ ");
-        System.out.print("Item Information for " + item.getID());
-        System.out.print(" ------");
-        System.out.print("\nID: " + item.getID());
-        System.out.print(" Name: " + item.getTitle());
-
-        if(item.getOwner() != null) {
-            System.out.print(" Status: Borrowed");
-            System.out.print(" Borrowed Date: " + LocalDateToString(item.getBorrowDate()));
-            System.out.print(" Borrowed by: " + item.getOwner() + "\n");
-        }
-        else {
-            System.out.print(" Status: Available" + "\n");
-        }
-    }
-
-    //displaying Items
-    public static void displayItems() {
-        if (!Books.getMyBooks().isEmpty()) {
-            for (Books book : Books.getMyBooks()) {
-                printItem(book);
-                System.out.print("Author: " + book.getAuthor());
-                System.out.print(" Genre: " + book.getCategory());
-                System.out.println();
-            }
-        }
-        if (!Magazine.getMyMagazine().isEmpty()) {
-            for (Magazine magazine : Magazine.getMyMagazine()) {
-                printItem(magazine);
-                System.out.print("Publisher: " + magazine.getPublisher());
-                System.out.print(" Category: " + magazine.getCategory());
-                System.out.println();
-            }
-        }
-        if (!DVD.getMyDVDs().isEmpty()) {
-            for (DVD dvd : DVD.getMyDVDs()) {
-                printItem(dvd);
-                System.out.print("Director: " + dvd.getDirector());
-                System.out.print(" Category: " + dvd.getCategory());
-                System.out.print(" Runtime: " + dvd.getRunTime());
-                System.out.println();
-            }
         }
     }
 }
