@@ -35,26 +35,30 @@ public class Main {
         String animalsTXT = "animals1.txt";
         ArrayList<String[]> animalsData = readTxtAsObject(animalsTXT);
 
+        System.out.println("***********************************");
         //Determining which animal is this
+        System.out.println("***Initializing Animal information***");
+
+        //Using iteration,animals are assigned to an object and kept in a HashMap
         for (int i = 0; i < animalsData.size(); i++) {
             String[] animalInfo = animalsData.get(i);
 
             switch (animalInfo[0]){
                 case "Lion":
                     Lion lion = new Lion(animalInfo[1],Integer.parseInt(animalInfo[2]));
-                    Lion.setMapLions(animalInfo[1],lion);
+                    Animal.setMapAnimal(animalInfo[1],lion);
                     break;
                 case "Elephant":
                     Elephant elephant = new Elephant(animalInfo[1],Integer.parseInt(animalInfo[2]));
-                    Elephant.setMapElephants(animalInfo[1],elephant);
+                    Animal.setMapAnimal(animalInfo[1],elephant);
                     break;
                 case "Penguin":
                     Penguin penguin = new Penguin(animalInfo[1],Integer.parseInt(animalInfo[2]));
-                    Penguin.setMapPenguins(animalInfo[1],penguin);
+                    Animal.setMapAnimal(animalInfo[1],penguin);
                     break;
                 case "Chimpanzee":
                     Chimpanzee chimpanzee = new Chimpanzee(animalInfo[1],Integer.parseInt(animalInfo[2]));
-                    Chimpanzee.setMapChimpanzees(animalInfo[1],chimpanzee);
+                    Animal.setMapAnimal(animalInfo[1], chimpanzee);
                     break;
                 default:
                     System.out.println("Invalid animal");
@@ -67,18 +71,22 @@ public class Main {
         String peopleTXT = "persons1.txt";
         ArrayList<String[]> peopleData = readTxtAsObject(peopleTXT);
 
+        System.out.println("***********************************");
         //Determining which person is this
+        System.out.println("***Initializing Visitor and Personnel information***");
+
+        //Using iteration,people are assigned to an object and kept in a HashMap
         for (int i = 0; i < peopleData.size(); i++) {
             String[] peopleInfo = peopleData.get(i);
 
             switch (peopleInfo[0]){
                 case "Personnel":
                     Personnel personnel = new Personnel(peopleInfo[1],peopleInfo[2]);
-                    Personnel.setMapPersonnels(peopleInfo[2],personnel);
+                    People.setMapPeople(peopleInfo[2],personnel);
                     break;
                 case "Visitor":
                     Visitor visitor = new Visitor(peopleInfo[1],peopleInfo[2]);
-                    Visitor.setMapVisitors(peopleInfo[2],visitor);
+                    People.setMapPeople(peopleInfo[2],visitor);
                     break;
                 default:
                     System.out.println("Invalid person");
@@ -91,23 +99,29 @@ public class Main {
         String foodsTXT = "foods1.txt";
         ArrayList<String[]> foodsData = readTxtAsObject(foodsTXT);
 
+        System.out.println("***********************************");
         //Determining which food is this
+        System.out.println("***Initializing Food Stock***");
+        Double[] foodStock = new Double[3];
+
+        //Using iteration,a food object is created
         for (int i = 0; i < foodsData.size(); i++) {
             String[] foodsInfo = foodsData.get(i);
 
             switch (foodsInfo[0]){
                 case "Meat":
-                    Foods.setMeat(Double.parseDouble(foodsInfo[1]));
+                    foodStock[0] = Double.parseDouble(foodsInfo[1]);
                     break;
                 case "Fish":
-                    Foods.setFish(Double.parseDouble(foodsInfo[1]));
+                   foodStock[1] = Double.parseDouble(foodsInfo[1]);
                     break;
                 case "Plant":
-                    Foods.setPlants(Double.parseDouble(foodsInfo[1]));
+                    foodStock[2] = Double.parseDouble(foodsInfo[1]);
                     break;
                 default:
                     System.out.println("Invalid food");
             }
         }
+        Foods myFoods = new Foods(foodStock[0],foodStock[2],foodStock[1]);   //Food object to use
     }
 }

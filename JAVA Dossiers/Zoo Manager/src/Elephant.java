@@ -1,22 +1,15 @@
-import java.util.HashMap;
-
 public class Elephant extends Animal {
-    private static HashMap<String, Animal> mapElephants = new HashMap<>();
     /**
      * Constructs elephant instances
      * @param name      elephant name
      * @param age       elephant age
      */
     Elephant(String name, int age) {
-        super(name,age);
-        setMealChange(0.015);
-        setFirstMeal(9.715);
+        super(name,age,new String[]{"plants"});
+        setMealChange(0.015);       //meal size change in accordance with age
+        setFirstMeal(9.715);        //meal size for age 1
         setMealSize(chooseMealSize(age));
+        setCleanSentence("Washing the water area.");
+        System.out.println("Added new Elephant with name " + name + " aged " + age + ".");
     }
-
-    //GETTERS
-    public static HashMap<String, Animal> getMapElephants() {return mapElephants;}
-
-    //SETTERS
-    public static void  setMapElephants(String key,Elephant value) {mapElephants.put(key,value);}
 }

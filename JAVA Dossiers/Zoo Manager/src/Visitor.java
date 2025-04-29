@@ -1,7 +1,4 @@
-import java.util.HashMap;
-
-public class Visitor extends People {
-    private static HashMap<String, People> mapVisitors = new HashMap<>();
+public class Visitor extends People{
     /**
      * Constructs visitor instances
      * @param name      visitor name
@@ -9,15 +6,18 @@ public class Visitor extends People {
      */
     Visitor(String name,String id) {
         super(name, id);
+        System.out.println("Added new Visitor with id " + id + " and name " + name + ".");
     }
 
-    public void visit() {
-        //
+    /**
+     * provides visiting operations for visitors.
+     * @param id        visitor id
+     * @param name      animal name
+     */
+    @Override
+    public void visit(String id, String name) {
+        String personName = People.getMapPeople().get(id).getName();
+        String animalName = name;
+        System.out.println(personName + " successfully visited " + animalName + ".");
     }
-
-    //GETTER
-    public static HashMap<String, People> getMapVisitors() {return mapVisitors;}
-
-    //SETTERS
-    public static void  setMapVisitors(String key,Visitor value) {mapVisitors.put(key,value);}
 }

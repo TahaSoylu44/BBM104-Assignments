@@ -1,22 +1,15 @@
-import java.util.HashMap;
-
 public class Penguin extends Animal{
-    private static HashMap<String, Animal> mapPenguins = new HashMap<>();
     /**
      * Constructs penguin instances
      * @param name      penguin name
      * @param age       penguin age
      */
     Penguin(String name, int age) {
-        super(name,age);
-        setMealChange(0.04);
-        setFirstMeal(2.88);
+        super(name,age,new String[]{"fish"});
+        setMealChange(0.04);    //meal size change in accordance with age
+        setFirstMeal(2.88);     //meal size for age 1
         setMealSize(chooseMealSize(age));
+        setCleanSentence("Replenishing ice and scrubbing walls.");
+        System.out.println("Added new Penguin with name " + name + " aged " + age + ".");
     }
-
-    //GETTERS
-    public static HashMap<String, Animal> getMapPenguins() {return mapPenguins;}
-
-    //SETTERS
-    public static void  setMapPenguins(String key,Penguin value) {mapPenguins.put(key,value);}
 }

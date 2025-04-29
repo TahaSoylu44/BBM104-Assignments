@@ -1,6 +1,10 @@
-public abstract class People {
+import java.util.HashMap;
+
+public abstract class People{
+    //VARIABLES
     private final String name;
     private final String id;
+    private static HashMap<String, People> mapPeople = new HashMap<>();
 
     /**
      * Constructs people instances
@@ -12,7 +16,13 @@ public abstract class People {
         this.id = id;
     }
 
+    public abstract void visit(String id, String name);   //Child classes will override this method
+
     //GETTERS
     public String getName() {return name;}
     public String getId() {return id;}
+    public static HashMap<String, People> getMapPeople() {return mapPeople;}
+
+    //SETTER
+    public static void setMapPeople(String key, People value) {mapPeople.put(key,value);}
 }
