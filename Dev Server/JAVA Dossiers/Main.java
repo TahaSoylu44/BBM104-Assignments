@@ -7,18 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-/**
- * This class is "Main" class of my project.
- * It reads input files and writes output file.
- * Contains general methods like reading input files,writing output files.Executes the commands.
- * The program should be run with these parameters:
- * args[0]: The file which contains animals (animals.txt)
- * args[1]: The file which contains people (persons.txt)
- * args[2]: The file which contains foods (foods.txt)
- * args[3]: The file which contains commands (commands.txt)
- * args[4]: The output file
- * @author Taha Soylu
- */
 public class Main {
     // Function to read a text file
     /**
@@ -65,13 +53,6 @@ public class Main {
         }
     }
 
-    /**
-     * The main method which reads the files,executes the commands.
-     * @param args              Arguments written in terminal
-     * @throws AnimalNotFound   Non-existing animal exception
-     * @throws PersonNotFound   Non-existing person exception
-     * @throws IOException
-     */
     public static void main(String[] args) throws AnimalNotFound, PersonNotFound, IOException {
         //OUTPUT
         String myOutput = args[4];
@@ -79,7 +60,9 @@ public class Main {
         System.setOut(fileOut);  //Do not write to the terminal,write to file.
 
         //ANIMALS
+
         String animalsTXT = args[0];
+        //String animalsTXT = "animals3.txt";
         ArrayList<String[]> animalsData = readTxtAsObject(animalsTXT);
 
         System.out.println("***********************************");
@@ -113,7 +96,9 @@ public class Main {
         }
 
         //PEOPLE
+
         String peopleTXT = args[1];
+        //String peopleTXT = "persons3.txt";
         ArrayList<String[]> peopleData = readTxtAsObject(peopleTXT);
 
         System.out.println("***********************************");
@@ -139,7 +124,9 @@ public class Main {
         }
 
         //FOODS
+
         String foodsTXT = args[2];
+        //String foodsTXT = "foods3.txt";
         ArrayList<String[]> foodsData = readTxtAsObject(foodsTXT);
 
         System.out.println("***********************************");
@@ -168,7 +155,9 @@ public class Main {
         Foods myFoods = new Foods(foodStock[0],foodStock[2],foodStock[1]);   //Food object to use
 
         //COMMANDS
+
         String commandTXT = args[3];
+        //String commandTXT = "commands3.txt";
         ArrayList<String[]> commandData = readTxtAsObject(commandTXT);
         //Determining which command is this
         //Using iteration,determining which command will be executed.
@@ -228,7 +217,7 @@ public class Main {
                                     System.out.println(person.getName() + " tried to feed " + animalName + ".");
                                 }
 
-                                boolean isSuitable = false;     //Is it OK to feed an animal?Investigate if there is enough food.
+                                boolean isSuitable = false;
                                 String errorMessage = "";
 
                                 String[] mealList = animal.getMeal();

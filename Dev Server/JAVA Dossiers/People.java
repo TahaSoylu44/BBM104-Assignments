@@ -1,10 +1,5 @@
 import java.util.HashMap;
 
-/**
- * This abstract class is a super class for Personnel and Visitor.
- * Contains necessary variables and methods for items.
- * @author Taha Soylu
- */
 public abstract class People{
     //VARIABLES
     private final String name;

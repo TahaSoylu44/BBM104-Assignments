@@ -1,17 +1,12 @@
 import java.util.HashMap;
 
-/**
- * This abstract class is a super class for Lion,Elephant,Penguin and Chimpanzee.
- * Contains necessary variables and methods for items.
- * @author Taha Soylu
- */
 public abstract class Animal {
     //VARIABLES
     private final String name;
     private final int age;
     private double mealSize;
     private double mealChange;
-    private double firstMeal;    //for age 1
+    private double firstMeal;
     private static HashMap<String,Animal> mapAnimal =new HashMap<>();
     private String cleanSentence;
     private String[] meal;
@@ -28,7 +23,7 @@ public abstract class Animal {
     }
 
     /**
-     * Returns meal size of an animal based on its age.
+     * Returns meal size of an animal
      * @param age       animal's age
      * @return          meal size
      */

@@ -37,7 +37,6 @@ public class Personnel extends People{
             }
         }
 
-        //When an animal is fed,it is needed to decrease the stock.
         for (String food : animalFoodList) {
             switch (food){
                 case "meat":

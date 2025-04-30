@@ -1,6 +1,3 @@
-/**
- * This class contains food information.
- */
 public class Foods {
     //VARIABLES
     private double meat;
