@@ -13,15 +13,15 @@ Added new Personnel with id 731246 and name Eleanor.
 Added new Visitor with id 664923 and name Tom.
 ***********************************
 ***Initializing Food Stock***
-There are 40.0 kg of Meat in stock
-There are 100.0 kg of Fish in stock
-There are 60.0 kg of Plant in stock
+There are 40.000 kg of Meat in stock
+There are 100.000 kg of Fish in stock
+There are 60.000 kg of Plant in stock
 ***********************************
 ***Processing new Command***
 Listing available Food Stock:
-Plant: 60.0 kgs
-Fish: 100.0 kgs
-Meat: 40.0 kgs
+Plant: 60.000 kgs
+Fish: 100.000 kgs
+Meat: 40.000 kgs
 ***********************************
 ***Processing new Command***
 Selin tried  to register for a visit to Tux.
@@ -29,7 +29,7 @@ Selin successfully visited Tux.
 ***********************************
 ***Processing new Command***
 Victor attempts to feed Leo.
-Leo has been given 10.5 kgs of meat
+Leo has been given 10.100 kgs of meat
 ***********************************
 ***Processing new Command***
 Tom tried  to register for a visit to Ellie.
@@ -37,7 +37,7 @@ Tom successfully visited Ellie.
 ***********************************
 ***Processing new Command***
 Eleanor attempts to feed Bozo.
-Bozo has been given 55.0 kgs assorted fruits and hay
+Bozo has been given 55.000 kgs assorted fruits and hay
 ***********************************
 ***Processing new Command***
 Victor attempts to feed Spike.
@@ -45,9 +45,9 @@ Error: Not enough Plant
 ***********************************
 ***Processing new Command***
 Listing available Food Stock:
-Plant: 5.0 kgs
-Fish: 100.0 kgs
-Meat: 29.5 kgs
+Plant: 5.000 kgs
+Fish: 100.000 kgs
+Meat: 29.900 kgs
 ***********************************
 ***Processing new Command***
 Victor attempts to clean UnknownAnimal's habitat.

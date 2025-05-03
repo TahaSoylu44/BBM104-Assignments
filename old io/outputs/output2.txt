@@ -17,55 +17,55 @@ Added new Personnel with id 993214 and name Isaac.
 Added new Visitor with id 511236 and name Mehmet.
 ***********************************
 ***Initializing Food Stock***
-There are 60.000 kg of Meat in stock
-There are 90.000 kg of Fish in stock
-There are 70.000 kg of Plant in stock
+There are 60.0 kg of Meat in stock
+There are 90.0 kg of Fish in stock
+There are 70.0 kg of Plant in stock
 ***********************************
 ***Processing new Command***
 Listing available Food Stock:
-Plant: 70.000 kgs
-Fish: 90.000 kgs
-Meat: 60.000 kgs
+Plant: 70.0 kgs
+Fish: 90.0 kgs
+Meat: 60.0 kgs
 ***********************************
 ***Processing new Command***
 Isaac attempts to clean ShereKhan's habitat.
-Isaac started cleaning ShereKhan's habitat.
+Isaacstarted cleaning ShereKhan's habitat.
 Cleaning ShereKhan's habitat: Removing bones and refreshing sand.
 ***********************************
 ***Processing new Command***
-Elif tried to register for a visit to Tantor.
+Elif tried  to register for a visit to Tantor.
 Elif successfully visited Tantor.
 ***********************************
 ***Processing new Command***
-Elif tried to feed Tantor.
+Elif tried to feed Tantor
 Error: Visitors do not have the authority to feed animals.
 ***********************************
 ***Processing new Command***
 Maria attempts to feed ShereKhan.
-ShereKhan has been given 20.400 kgs of meat
+ShereKhan has been given 22.0 kgs of meat
 ***********************************
 ***Processing new Command***
 Maria attempts to feed Caesar.
-Caesar has been given 18.600 kgs of meat and 18.600 kgs of leaves
+Caesar has been given 19.8 kgs of meat and 19.8 kgs of leaves
 ***********************************
 ***Processing new Command***
 Isaac attempts to clean Rico's habitat.
-Isaac started cleaning Rico's habitat.
+Isaacstarted cleaning Rico's habitat.
 Cleaning Rico's habitat: Replenishing ice and scrubbing walls.
 ***********************************
 ***Processing new Command***
-Mehmet tried to register for a visit to Skipper.
+Mehmet tried  to register for a visit to Skipper.
 Mehmet successfully visited Skipper.
 ***********************************
 ***Processing new Command***
 Listing available Food Stock:
-Plant: 51.400 kgs
-Fish: 90.000 kgs
-Meat: 21.000 kgs
+Plant: 50.2 kgs
+Fish: 90.0 kgs
+Meat: 18.2 kgs
 ***********************************
 ***Processing new Command***
 Isaac attempts to feed Bubbles.
-Bubbles has been given 14.875 kgs of meat and 14.875 kgs of leaves
+Bubbles has been given 14.625 kgs of meat and 14.625 kgs of leaves
 ***********************************
 ***Processing new Command***
 Isaac attempts to feed Nala.
@@ -73,7 +73,7 @@ Error: Not enough Meat
 ***********************************
 ***Processing new Command***
 Maria attempts to clean Bubbles's habitat.
-Maria started cleaning Bubbles's habitat.
+Mariastarted cleaning Bubbles's habitat.
 Cleaning Bubbles's habitat: Sweeping the enclosure and replacing branches.
 ***********************************
 ***Processing new Command***
@@ -82,11 +82,11 @@ Error: Not enough Meat
 ***********************************
 ***Processing new Command***
 Maria attempts to clean Horton's habitat.
-Maria started cleaning Horton's habitat.
+Mariastarted cleaning Horton's habitat.
 Cleaning Horton's habitat: Washing the water area.
 ***********************************
 ***Processing new Command***
 Listing available Food Stock:
-Plant: 36.525 kgs
-Fish: 90.000 kgs
-Meat: 6.125 kgs
+Plant: 35.575 kgs
+Fish: 90.0 kgs
+Meat: 3.5749999999999993 kgs

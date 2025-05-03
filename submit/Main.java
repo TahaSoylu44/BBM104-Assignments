@@ -210,9 +210,6 @@ public class Main {
                     catch (PersonNotFound e) {
                         System.out.println("Error: " + e.getMessage());
                     }
-                    catch (Exception e) { //The error I may not catch
-                        System.out.println("An unexpected error occurred.");
-                    }
                     break;
                 case "Feed Animal":
                     personID = commandInfo[1];
@@ -235,7 +232,7 @@ public class Main {
                                 String errorMessage = "";
 
                                 String[] mealList = animal.getMeal();
-                                boolean shouldBreak = false;  //for loop flag
+                                boolean shouldBreak = false;
 
                                 for (String meal : mealList) {
                                     if(shouldBreak) break;
@@ -253,9 +250,6 @@ public class Main {
                                                 errorMessage = e.getMessage();
                                                 shouldBreak = true;
                                             }
-                                            catch (Exception e) { //The error I may not catch
-                                                System.out.println("An unexpected error occurred.");
-                                            }
                                             break;
                                         case "plants":
                                             try{
@@ -270,9 +264,6 @@ public class Main {
                                                 errorMessage = e.getMessage();
                                                 shouldBreak = true;
                                             }
-                                            catch (Exception e) {  //The error I may not catch
-                                                System.out.println("An unexpected error occurred.");
-                                            }
                                             break;
                                         case "fish":
                                             try{
@@ -286,9 +277,6 @@ public class Main {
                                             catch (NotEnoughFood e) {
                                                 errorMessage = e.getMessage();
                                                 shouldBreak = true;
-                                            }
-                                            catch (Exception e) {   //The error I may not catch
-                                                System.out.println("An unexpected error occurred.");
                                             }
                                             break;
                                     }
@@ -312,16 +300,10 @@ public class Main {
                         catch (PersonNotFound e) {
                             System.out.println("Error: " + e.getMessage());
                         }
-                        catch (Exception e) {    //The error I may not catch
-                            System.out.println("An unexpected error occurred.");
-                        }
                     }
-                    catch (NumberFormatException e) {   //The error I may not catch
+                    catch (NumberFormatException e) {
                         System.out.println("Error processing command: " + commandInfo[0] + "," + commandInfo[1] + "," + commandInfo[2] + "," + commandInfo[3]);
                         System.out.println("Error: For input string: \"" + commandInfo[3] + "\"");
-                    }
-                    catch (Exception e) {   //The error I may not catch
-                        System.out.println("An unexpected error occurred.");
                     }
                     break;
                 default:

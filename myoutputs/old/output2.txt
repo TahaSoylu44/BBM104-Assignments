@@ -17,9 +17,9 @@ Added new Personnel with id 993214 and name Isaac.
 Added new Visitor with id 511236 and name Mehmet.
 ***********************************
 ***Initializing Food Stock***
-There are 60.000 kg of Meat in stock
-There are 90.000 kg of Fish in stock
-There are 70.000 kg of Plant in stock
+There are 60.0 kg of Meat in stock
+There are 90.0 kg of Fish in stock
+There are 70.0 kg of Plant in stock
 ***********************************
 ***Processing new Command***
 Listing available Food Stock:

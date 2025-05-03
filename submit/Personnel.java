@@ -19,7 +19,7 @@ public class Personnel extends People{
     public void feed(String id, String name, double amount,Foods myFoods){
         String animalName = name;
         Animal myAnimal = Animal.getMapAnimal().get(animalName);
-        double foodAmount = amount * myAnimal.getMealSize();    //The total eaten food
+        double foodAmount = amount * myAnimal.getMealSize();
         String[] animalFoodList = myAnimal.getMeal();
 
         if (animalFoodList.length > 1){

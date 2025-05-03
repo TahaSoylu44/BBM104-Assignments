@@ -35,6 +35,7 @@ public abstract class Animal {
      * @return          meal size
      */
     public double chooseMealSize(int age){return (age - defaultAge) * mealChange + defaultSizeMeal;}
+    //public double chooseMealSize(int age){return (mealChange * (age - 1) + firstMeal) * defaultSizeMeal;}
 
     //GETTERS
     public String getName() {return name;}

@@ -13,9 +13,9 @@ Added new Personnel with id 731246 and name Eleanor.
 Added new Visitor with id 664923 and name Tom.
 ***********************************
 ***Initializing Food Stock***
-There are 40.000 kg of Meat in stock
-There are 100.000 kg of Fish in stock
-There are 60.000 kg of Plant in stock
+There are 40.0 kg of Meat in stock
+There are 100.0 kg of Fish in stock
+There are 60.0 kg of Plant in stock
 ***********************************
 ***Processing new Command***
 Listing available Food Stock:

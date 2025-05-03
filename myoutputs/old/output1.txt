@@ -17,9 +17,9 @@ Added new Personnel with id 186534 and name Abigail.
 Added new Visitor with id 755332 and name Ayşe.
 ***********************************
 ***Initializing Food Stock***
-There are 50.000 kg of Meat in stock
-There are 80.000 kg of Fish in stock
-There are 50.000 kg of Plant in stock
+There are 50.0 kg of Meat in stock
+There are 80.0 kg of Fish in stock
+There are 50.0 kg of Plant in stock
 ***********************************
 ***Processing new Command***
 Listing available Food Stock:
